@@ -1,0 +1,14 @@
+//colours
+$white: #FFFCF2;
+$sandy:#CCC5B9;
+$gray: #403D39;
+$dark-gray: #252422;
+$orange: #EB5E28;
+
+//functions
+@mixin flexCenter($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
