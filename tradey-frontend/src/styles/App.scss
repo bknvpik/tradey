@@ -1,17 +1,37 @@
+@use 'LoginSignUp';
 @import 'index';
 
 body {
     margin: 0;
     padding: 0;
     background: $white;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .navbar {
-    @include flexCenter(row);
+    display: grid;
+    grid-template-columns: 300px 5% 1fr 300px;
     background-color: $white;
     color: $gray;
     width: 100%;
-    height: 5rem;
+    height: 6rem;
+        .logo-container {
+            @include svgContainer;
+            grid-column-start: 2;
+        }
+    img {
+        display: block;
+        width: 100%; 
+    }
+    .nav-buttons {
+        @include flexCenter(row);
+        padding-left: 10rem;
+        justify-content: space-around;
+        grid-column-start: 3;
+        button {
+            @include buttonStyling;
+        }
+    }
 }
 
 .footer {
