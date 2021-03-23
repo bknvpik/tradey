@@ -1,0 +1,35 @@
+//colours
+$white: #FFFCF2;
+$sandy:#CCC5B9;
+$gray: #403D39;
+$dark-gray: #252422;
+$orange: #EB5E28;
+
+//functions
+@mixin flexCenter($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin buttonStyling {
+    font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 25px;
+            background: $white;
+            color: $gray;
+            border: none;
+            cursor: pointer;
+            &:focus {
+                outline: none;
+                color: $dark-gray;
+                border-bottom: 5px solid $orange;
+            }
+}
+
+@mixin svgContainer {
+    width: 100%;
+    height: 100%;
+    @include flexCenter(row);
+}
