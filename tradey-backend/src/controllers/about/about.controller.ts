@@ -4,7 +4,10 @@ import { Controller, Get } from '@nestjs/common';
 export class AboutController {
     
     @Get()
-    about(): string {
-        return 'Renders about page';
+    about() {
+        return [
+            { id: 1, surname: 'Johnson' },
+            { id: 2, surname: 'Knapik' }
+        ];
     }
 }

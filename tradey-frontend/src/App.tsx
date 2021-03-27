@@ -8,7 +8,7 @@ import About from './pages/About';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import AddItem from './pages/AddItem';
-
+import axios from 'axios';
 
 export default class App extends Component {
   render() {
@@ -30,10 +30,23 @@ export default class App extends Component {
   }
 }
 
-const Home = () => {
-  return (
-    <div className="home">
-      Browse page with items in default caetgory
-    </div>
-  )
+class Home extends Component {
+  state = {
+    data: []
+  }
+
+  componentDidMount() {
+    axios.get('http://localhost:3000/about').then(res => {
+      const data = res.data;
+      this.setState({ data });
+    })
+  }
+  render() {
+    return (
+      <div className="home">
+        Browse page with items in default caetgory
+        { JSON.stringify(this.state.data, null, 2)  }
+      </div>
+    )
+  }
 }
