@@ -1,0 +1,44 @@
+@import '../index';
+
+.footer {
+    @include flexCenter(row);
+    background-color: $gray;
+    color: $white;
+    width: 100%;
+    height: 8rem;
+    position: relative;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 300px 1fr 1fr 1fr 300px;
+    box-shadow: inset 0px 11px 8px -10px $dark-gray;
+    i { 
+        color: $orange;
+        font-size: 1.5rem;
+    }
+    .contact {
+        grid-column-start: 2;
+        i {
+            margin-right: 0.5rem;
+        }
+        p {
+            @include flexCenter(row);
+            justify-content: flex-start;
+        }
+    }
+    .copyright {
+        grid-column-start: 3;
+        @include flexCenter(column);
+        p {
+            position: absolute;
+            bottom: 0;
+        }
+    }
+    .social {
+        grid-column-start: 4;
+        @include flexCenter(row);
+        justify-content: flex-end;
+        i {
+            margin-left: 0.5rem;
+        }
+    }
+}
