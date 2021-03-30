@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/components/Nav.scss';
 
 export default class Nav extends Component {
     render() {
         return (
             <nav className="navbar">
                 <div className="logo-container">
-                    <img src="tradey-logo.svg" alt="logo"/>
+                    <Link to="/" style={{width: "100%"}}>
+                        <img src="tradey-logo.svg" alt="logo"/>
+                    </Link>
                 </div>
                 <div className="nav-buttons">
                     <Link to="/browse">
@@ -22,7 +25,7 @@ export default class Nav extends Component {
                         <button>Sign Up</button>
                     </Link>
                     <Link to="/add-item">
-                        <button>Trade</button>
+                        <button className="trade-btn">TRADE</button>
                     </Link>
                 </div>
             </nav>

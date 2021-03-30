@@ -20,7 +20,13 @@ $orange: #EB5E28;
             background: $white;
             color: $gray;
             border: none;
+            height: 3rem;
+            width: 8rem;
+            border-bottom: 5px solid transparent;
             cursor: pointer;
+            &:hover {
+                border-bottom: 5px solid $sandy;
+            }
             &:focus {
                 outline: none;
                 color: $dark-gray;

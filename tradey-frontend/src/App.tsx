@@ -46,6 +46,7 @@ class Home extends Component {
       <div className="home">
         Browse page with items in default caetgory
         { JSON.stringify(this.state.data, null, 2)  }
+        <Footer />
       </div>
     )
   }
