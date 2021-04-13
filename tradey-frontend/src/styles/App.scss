@@ -7,3 +7,12 @@ body {
     background: $white;
     font-family: 'Montserrat', sans-serif;
 }
+
+.bg-dim {
+    position: absolute;
+    z-index: -1;
+    width: inherit;
+    height: inherit;
+    background: $gray;
+    opacity: 60%;
+}
