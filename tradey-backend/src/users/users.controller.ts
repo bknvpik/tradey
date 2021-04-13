@@ -1,15 +1,15 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Post, Param } from '@nestjs/common';
 
 @Controller()
 export class UsersController {
-    @Get('login')
+    @Post('login')
     login(): string {
-        return "Renders login page";
+        return "Login user";
     }
 
-    @Get('sign-up')
+    @Post('sign-up')
     signUp(): string {
-        return "Renders sign-up page";
+      return 'This action adds a new user';
     }
 
     @Get('sign-out')

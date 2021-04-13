@@ -1,0 +1,23 @@
+@import '../index';
+
+.items-list {
+    width: 100%;
+    min-height: 80vh;
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+
+    .list {
+        grid-column-start: 2;
+        max-width: 100%;
+        display: flex;
+        align-content: space-around;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    .options-tab {
+        width: 100%;
+        grid-column-start: 2;
+        background: $sandy;
+        border-radius: 10px;
+    }
+}

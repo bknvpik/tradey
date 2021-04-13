@@ -13,15 +13,6 @@
     background-size: cover;
 }
 
-.bg-dim {
-    position: absolute;
-    z-index: -1;
-    width: inherit;
-    height: inherit;
-    background: $gray;
-    opacity: 60%;
-}
-
 .login-signup-form {
     @include flexCenter(column);
     width: 25%;

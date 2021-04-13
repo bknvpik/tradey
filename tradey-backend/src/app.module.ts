@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
 import { AppController } from './app.controller';
-import { UsersController } from './users/users.controller';
-import { ItemsController } from './items/items.controller';
 import { AppService } from './app.service';
 import { Connection } from 'typeorm';
 import { UsersModule } from './users/users.module';

@@ -9,5 +9,5 @@
     "synchronize": true,
     "ssl": {
         "rejectUnauthorized": false
-      }
-} 
+    }
+}

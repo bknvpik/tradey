@@ -1,0 +1,44 @@
+@import '../index';
+
+.search-bar {
+    width: 100%;
+    height: 15rem;
+    @include flexCenter(column);
+    position: relative;
+    z-index: -2;
+    background: url('../images/bg-image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    .search-input {
+        width: 40%;
+        height: 3.5rem;
+        position: relative;
+        @include flexCenter(row);
+        justify-content: space-around;
+        z-index: 1;
+        background: $white;
+        border-radius: 20px;
+        button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            font-size: 2rem;
+            padding: 0;
+            @include flexCenter(row);
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        input {
+            padding: 0;
+            min-width: 90%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            border-radius: 10px;
+        }
+    }
+}
