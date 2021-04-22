@@ -8,7 +8,7 @@ export default class Nav extends Component {
             <nav className="navbar">
                 <div className="logo-container">
                     <Link to="/" style={{width: "100%"}}>
-                        <img src="tradey-logo.svg" alt="logo"/>
+                        <img src={process.env.PUBLIC_URL + '/tradey-logo.svg'} alt="logo"/>
                     </Link>
                 </div>
                 <div className="nav-buttons">
