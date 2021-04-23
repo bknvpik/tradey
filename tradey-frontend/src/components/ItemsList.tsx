@@ -10,7 +10,7 @@ export default class ItemsList extends Component<any, any> {
                 </div>
                 <div className="list">
                     {this.props.items.map((item: any) => 
-                        <Item key={item.name} size={item.size.size} condition={item.condition.condition} />
+                        <Item key={item.id} name={item.name} size={item.size.size} condition={item.condition.condition} />
                     )}
                 </div>
             </div>

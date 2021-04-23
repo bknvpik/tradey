@@ -6,19 +6,23 @@ import { ItemCategories } from './entities/item-categories.entity';
 import { ItemConditions } from './entities/item-conditions.entity';
 import { ItemSizes } from './entities/item-sizes.entity';
 import { AddItemDto } from './dtos/add-item.dto';
+import { AddItemImagesDto } from './dtos/add-item-images.dto';
+import { ItemImages } from './entities/item-images.entity';
 
 @Injectable()
 export class ItemsService {
     constructor(
-        @InjectRepository(Item)
-        private itemsRepository: Repository<Item>,
-        @InjectRepository(ItemCategories)
-        private itemCategoriesRepository: Repository<ItemCategories>,
-        @InjectRepository(ItemConditions)
-        private itemConditionsRepository: Repository<ItemConditions>,
-        @InjectRepository(ItemSizes)
-        private itemSizesRepository: Repository<ItemSizes>,
-      ) {}
+      @InjectRepository(Item)
+      private itemsRepository: Repository<Item>,
+      @InjectRepository(ItemCategories)
+      private itemCategoriesRepository: Repository<ItemCategories>,
+      @InjectRepository(ItemConditions)
+      private itemConditionsRepository: Repository<ItemConditions>,
+      @InjectRepository(ItemSizes)
+      private itemSizesRepository: Repository<ItemSizes>,
+      @InjectRepository(ItemImages)
+      private itemImagesRepository: Repository<ItemImages>,
+    ) {}
 
       findAll(): Promise<Item[]> {
         return this.itemsRepository.find();
@@ -36,8 +40,9 @@ export class ItemsService {
         return await this.itemConditionsRepository.find();
       }
 
-      async createItem(item: AddItemDto): Promise<AddItemDto>{
-        return await this.itemsRepository.save(item);
+      async createItem(item: AddItemDto, itemImages: AddItemImagesDto) {
+        await this.itemsRepository.save(item);
+        //await this.itemImagesRepository.save(itemImages);
       }
 
       async findByCategory(itemCategory: string): Promise<Item[]> {

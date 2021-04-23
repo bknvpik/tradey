@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
-import ItemsNav from '../components/ItemsNav';
 import Footer from '../components/Footer';
 import ItemsList from '../components/ItemsList';
 import '../styles/components/ItemsNav.scss';
@@ -27,7 +26,6 @@ export default class Browse extends Component<any, State> {
     url: string;
     paths: string[];
 
-
     componentDidMount() {
         axios.get(`http://localhost:3000${this.url}`)
         .then(res => {
@@ -50,18 +48,11 @@ export default class Browse extends Component<any, State> {
                     <SearchBar />
                     <div className="items-nav">
                         <div className="buttons">
-                            <Link to={`/browse/${this.paths[0]}`}>
-                                <button onClick={() => this.setState({category: this.paths[0]}, this.handleChange)}>{this.paths[0]}</button>
-                            </Link>
-                            <Link to={`/browse/${this.paths[1]}`}>
-                                <button onClick={() => this.setState({category: this.paths[1]}, this.handleChange)}>{this.paths[1]}</button>
-                            </Link>
-                            <Link to={`/browse/${this.paths[2]}`}>
-                                <button onClick={() => this.setState({category: this.paths[2]}, this.handleChange)}>{this.paths[2]}</button>
-                            </Link>
-                            <Link to={`/browse/${this.paths[3]}`}>
-                                <button onClick={() => this.setState({category: this.paths[3]}, this.handleChange)}>{this.paths[3]}</button>
-                            </Link>
+                            {this.paths.map((path) => 
+                                <Link to={`/browse/${path}`} key={path}>
+                                    <button className={this.state.category === path ? "active" : "" } onClick={() => this.setState({category: path}, this.handleChange)}>{path}</button>
+                                </Link> 
+                            )}
                         </div>
                     </div>
                 <ItemsList items={this.state.items} />

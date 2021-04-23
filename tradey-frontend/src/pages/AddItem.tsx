@@ -31,30 +31,48 @@ export default class AddItem extends Component<any, State> {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.clearData = this.clearData.bind(this);
     }
 
     handleSubmit(e: any) {
-        console.log(this.state.images);
-        axios.post("http://localhost:3000/add-item", {
-            name: this.state.name,
-            description: this.state.description,
-            createdAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
-            category: this.state.activeCategory,
-            size: this.state.activeSize,
-            condition: this.state.activeCondition,
-            user: 1
-        }).then(res => {
-            console.log(res.data);
-        }).catch(err => {
-            console.log(err);
-        })
         e.preventDefault();
+        if(!this.state.name || !this.state.description) {
+            return;
+        }
+        else {
+            axios.post("http://localhost:3000/add-item", {
+                name: this.state.name,
+                description: this.state.description,
+                createdAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                category: this.state.activeCategory,
+                size: this.state.activeSize,
+                condition: this.state.activeCondition,
+                user: 1
+            }).then(res => {
+                console.log(res.data);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+        this.clearData();
+        e.target.reset();
     };
 
     handleChange(e: any) {
         this.setState({
             ...this.state,
             [e.target.name]: e.target.value,
+        })
+    }
+
+    clearData() {
+        this.setState({
+            ...this.state,
+            name: '',
+            description: '',
+            activeCategory: 1,
+            activeSize: 1,
+            activeCondition: 1,
         })
     }
 
@@ -74,10 +92,25 @@ export default class AddItem extends Component<any, State> {
                     <h1>Add New Item</h1>
                 </div>
                 <form className="add-item-form" onSubmit={this.handleSubmit}>
-                    <input id="1" accept=".jpeg, .png" type="file" />
-                    <input id="2" accept=".jpeg, .png" type="file" />
-                    <input id="3" accept=".jpeg, .png" type="file" />
-                    <input id="4" accept=".jpeg, .png" type="file" />
+                    <h2>Add Images</h2>
+                    <div className="image-inputs">
+                        <label className="custom-file-upload">
+                            <i className="fas fa-plus-circle"></i>
+                            <input id="1" accept=".jpeg, .png" type="file" />
+                        </label>
+                        <label className="custom-file-upload">
+                            <i className="fas fa-plus-circle"></i>
+                            <input id="2" accept=".jpeg, .png" type="file" />
+                        </label>
+                        <label className="custom-file-upload">
+                            <i className="fas fa-plus-circle"></i>
+                            <input id="3" accept=".jpeg, .png" type="file" />
+                        </label>
+                        <label className="custom-file-upload">
+                            <i className="fas fa-plus-circle"></i>
+                            <input id="4" accept=".jpeg, .png" type="file" />
+                        </label>
+                    </div>
                     <input type="text" name="name" placeholder="name" onChange={this.handleChange}></input>
                     <textarea name="description" placeholder="description" onChange={this.handleChange}></textarea>
                     <div className="select-wrapper">

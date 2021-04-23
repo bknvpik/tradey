@@ -2,6 +2,7 @@ import { Controller, Get, Post, Param, Body } from '@nestjs/common';
 import { Item } from './entities/item.entity';
 import { ItemsService } from './items.service';
 import { AddItemDto } from './dtos/add-item.dto';
+import { AddItemImagesDto } from './dtos/add-item-images.dto';
 
 @Controller()
 export class ItemsController {
@@ -28,8 +29,7 @@ export class ItemsController {
     }
 
     @Post('add-item')
-    addNewItem(@Body() newItem: AddItemDto): Promise<AddItemDto> {
-        console.log(newItem);
-        return this.itemsService.createItem(newItem);
+    addNewItem(@Body() newItem: AddItemDto, itemImages: AddItemImagesDto) {
+        return this.itemsService.createItem(newItem, itemImages);
     }
 }

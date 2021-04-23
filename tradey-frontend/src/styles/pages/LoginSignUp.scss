@@ -3,7 +3,6 @@
 .login-signup {
     @include flexCenter(column);
     position: absolute;
-    z-index: -2;
     top: 0;
     bottom: 0;
     width: 100%;
@@ -14,6 +13,8 @@
 }
 
 .login-signup-form {
+    position: relative;
+    z-index: 1;
     @include flexCenter(column);
     width: 25%;
     height: 60%;

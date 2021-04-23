@@ -7,30 +7,35 @@ export default class Login extends Component<any, any> {
         this.state = {
             email: "",
             password: "",
-            error: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.clearData = this.clearData.bind(this);
     }
 
     handleSubmit(e: any) {
+        e.preventDefault();
+        if(!this.state.email || !this.state.password)
+            return;
         axios.post("http://localhost:3000/login", {
-            user: {
-                email: this.state.email,
-                password: this.state.password,
-            }
+            username: this.state.email,
+            password: this.state.password,
         }).then(res => {
             console.log(res.data);
         }).catch(err => {
             console.log(err);
         })
-        e.preventDefault();
-    };
+        e.target.reset();
+    }
 
     handleChange(e: any) {
         this.setState({
             [e.target.name]: e.target.value,
         })
+    }
+
+    clearData() {
+        this.setState({ email: '', password: '' })
     }
 
     render() {

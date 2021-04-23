@@ -25,6 +25,7 @@
         .item-name {
             width: 100%;
             min-height: 30%;
+            font-weight: bold;
             @include flexCenter(row);
         }
         .wrapper {
@@ -33,6 +34,7 @@
             @include flexCenter(row);
             .item-details {
                 box-sizing: border-box;
+                font-size: 0.9rem;
                 height: 100%;
                 min-width: 60%;
                 padding: 0.5rem;
@@ -49,6 +51,10 @@
                 button {
                     border: none;
                     background: $orange;
+                    color: $white;
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: bold;
+                    cursor: pointer;
                     border-radius: 5px;
                     height: 50%;
                     width: 70%;
