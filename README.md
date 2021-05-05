@@ -1,7 +1,7 @@
 ## Project Name & Pitch
 tradey
 
-tradey is an app designed to safely trade items like shoes, clothes, accessories etc with people from all over the world. Built with React, Nest, HTML and CSS (SCSS).
+tradey is an app designed to safely trade items like shoes, clothes, accessories etc. with people from all over the world. Built with React, Nest, HTML and CSS (SCSS).
 
 ## Project Status
 This project is currently in development.
