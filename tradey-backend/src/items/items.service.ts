@@ -6,7 +6,6 @@ import { ItemCategories } from './entities/item-categories.entity';
 import { ItemConditions } from './entities/item-conditions.entity';
 import { ItemSizes } from './entities/item-sizes.entity';
 import { AddItemDto } from './dtos/add-item.dto';
-import { AddItemImagesDto } from './dtos/add-item-images.dto';
 import { ItemImages } from './entities/item-images.entity';
 
 @Injectable()
@@ -40,9 +39,8 @@ export class ItemsService {
         return await this.itemConditionsRepository.find();
       }
 
-      async createItem(item: AddItemDto, itemImages: AddItemImagesDto) {
+      async createItem(item: AddItemDto) {
         await this.itemsRepository.save(item);
-        //await this.itemImagesRepository.save(itemImages);
       }
 
       async findByCategory(itemCategory: string): Promise<Item[]> {

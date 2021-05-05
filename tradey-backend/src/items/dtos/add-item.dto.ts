@@ -6,4 +6,5 @@ export class AddItemDto {
     condition: any;
     size: any;
     user: any;
+    images: any[];
   }

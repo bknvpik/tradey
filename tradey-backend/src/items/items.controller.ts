@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { Item } from './entities/item.entity';
 import { ItemsService } from './items.service';
 import { AddItemDto } from './dtos/add-item.dto';
-import { AddItemImagesDto } from './dtos/add-item-images.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import path from 'path';
 
 @Controller()
 export class ItemsController {
@@ -29,7 +32,13 @@ export class ItemsController {
     }
 
     @Post('add-item')
-    addNewItem(@Body() newItem: AddItemDto, itemImages: AddItemImagesDto) {
-        return this.itemsService.createItem(newItem, itemImages);
+    @UseInterceptors(FileInterceptor('image', {
+        dest: "./uploads/item-images"
+    }))
+    async addNewItem(@Body() newItem: AddItemDto, @UploadedFile() image: Express.Multer.File) {
+        console.log(image);
+        newItem.images = [{image: image.filename}];
+        console.log(newItem);
+        return this.itemsService.createItem(newItem);
     }
 }

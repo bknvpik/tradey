@@ -17,7 +17,7 @@ export class Item {
   @Column({ type: "varchar", length: 255 })
   description: string;
   
-  @Column({ type: "timestamp", nullable: true })
+  @Column({ type: "timestamp" })
   createdAt: string;
 
   @Column({ type: "bool", default: true })
@@ -35,7 +35,7 @@ export class Item {
   @JoinColumn()
   size: ItemSizes;
 
-  @OneToMany( type => ItemImages, itemImages => itemImages.item )
+  @OneToMany( type => ItemImages, itemImages => itemImages.item, {cascade: ['insert', 'update']})
   images: ItemImages[];
 
   @ManyToOne( type => User, user => user.items )

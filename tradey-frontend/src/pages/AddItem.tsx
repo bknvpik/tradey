@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import http from '../http-common';
 import Footer from '../components/Footer';
 import '../styles/pages/AddItem.scss';
 
@@ -12,7 +12,8 @@ interface State {
     activeCategory: number;
     activeSize: number;
     activeCondition: number;
-    images: any
+    messages: string;
+    image: any;
 }
 
 export default class AddItem extends Component<any, State> {
@@ -27,28 +28,46 @@ export default class AddItem extends Component<any, State> {
             activeCategory: 1,
             activeSize: 1,
             activeCondition: 1,
-            images: null
+            messages: '',
+            image: null
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.clearData = this.clearData.bind(this);
+        this.selectFile = this.selectFile.bind(this);
     }
-
+    
     handleSubmit(e: any) {
         e.preventDefault();
         if(!this.state.name || !this.state.description) {
+            this.setState({messages: 'fields cannot be empty.'})
             return;
         }
         else {
-            axios.post("http://localhost:3000/add-item", {
-                name: this.state.name,
-                description: this.state.description,
-                createdAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
-                category: this.state.activeCategory,
-                size: this.state.activeSize,
-                condition: this.state.activeCondition,
-                user: 1
+            /*let dataArray = [
+                {name: this.state.name},
+                {description: this.state.description},
+                {createdAt: new Date().toISOString().slice(0, 19).replace('T', ' ')},
+                {category: this.state.activeCategory},
+                {size: this.state.activeSize},
+                {condition: this.state.activeCondition},
+                {user: 1},
+                {image: this.state.image}
+            ];*/
+            let formData = new FormData();
+            //formData.append('newItem', JSON.stringify(dataArray));
+            formData.append('name', this.state.name);
+            formData.append('description', this.state.description);
+            formData.append('createdAt', new Date().toISOString().slice(0, 19).replace('T', ' '));
+            formData.append('category', this.state.activeCategory.toString());
+            formData.append('size', this.state.activeSize.toString());
+            formData.append('condition', this.state.activeCondition.toString());
+            formData.append('user', '1');
+            formData.append('image', this.state.image, this.state.image.name);
+            
+            http.post('/add-item', formData, {
             }).then(res => {
+                this.setState({messages: 'Item added succesfully!'});
                 console.log(res.data);
             }).catch(err => {
                 console.log(err);
@@ -57,6 +76,10 @@ export default class AddItem extends Component<any, State> {
         this.clearData();
         e.target.reset();
     };
+
+    selectFile(e: any) {
+        this.setState({image: e.target.files[0]}, () => console.log(this.state.image))
+    }
 
     handleChange(e: any) {
         this.setState({
@@ -77,7 +100,7 @@ export default class AddItem extends Component<any, State> {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:3000/add-item`)
+        http.get(`/add-item`)
         .then(res => {
           const categories = res.data.categories;
           const conditions = res.data.conditions;
@@ -96,20 +119,8 @@ export default class AddItem extends Component<any, State> {
                     <div className="image-inputs">
                         <label className="custom-file-upload">
                             <i className="fas fa-plus-circle"></i>
-                            <input id="1" accept=".jpeg, .png" type="file" />
-                        </label>
-                        <label className="custom-file-upload">
-                            <i className="fas fa-plus-circle"></i>
-                            <input id="2" accept=".jpeg, .png" type="file" />
-                        </label>
-                        <label className="custom-file-upload">
-                            <i className="fas fa-plus-circle"></i>
-                            <input id="3" accept=".jpeg, .png" type="file" />
-                        </label>
-                        <label className="custom-file-upload">
-                            <i className="fas fa-plus-circle"></i>
-                            <input id="4" accept=".jpeg, .png" type="file" />
-                        </label>
+                            <input type="file" name="image" onChange={this.selectFile}/>
+                        </label> 
                     </div>
                     <input type="text" name="name" placeholder="name" onChange={this.handleChange}></input>
                     <textarea name="description" placeholder="description" onChange={this.handleChange}></textarea>
@@ -132,6 +143,9 @@ export default class AddItem extends Component<any, State> {
                     </div>
                     <input type="submit" value="Add Item"></input>
                 </form>
+                <div className="messages">
+                    {this.state.messages ? this.state.messages : null}
+                </div>
                 <Footer />
             </div>
         )
