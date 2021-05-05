@@ -1,0 +1,96 @@
+@import '../index';
+
+.add-item {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 90vh;
+    @include flexCenter(column);
+    .header {
+        h1 {
+            margin: 0;
+            padding: 0;
+        }
+        height: 10rem;
+        width: 100%;
+        background: $gray;
+        color: $white;
+        @include flexCenter(row);
+    }
+    .add-item-form {
+        width: 100%;
+        height: 100%;
+        h2 {
+            margin: 0;
+            padding: 0;
+        }
+        @include flexCenter(column);
+        justify-content: space-around;
+        .image-inputs {
+            width: 30rem;
+            @include flexCenter(row);
+            justify-content: space-between;
+            .custom-file-upload {
+                background: $sandy;
+                width: 7rem;
+                height: 7rem;
+                border-radius: 10px;
+                box-shadow: 1px 2px 2px 1px $sandy;
+                cursor: pointer;
+                @include flexCenter(row);
+                font-size: 3rem;
+                color: $white;
+            }
+            input {
+                display: none;
+            }
+        }
+        input {
+            width: 30rem;
+            height: 4rem;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: none;
+            box-shadow: 1px 2px 2px 1px $sandy;
+            font-family: 'Montserrat', sans-serif;
+            &:focus {
+              outline: none;  
+            }
+        }
+        textarea {
+            text-align: center;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            width: 30rem;
+            height: 8rem;
+            resize: none;
+            box-shadow: 1px 2px 2px 1px $sandy;
+            &:focus {
+                outline: none;  
+              }
+        }
+        input[type="submit"] {
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: $orange;
+            color: $white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+        }
+        .select-wrapper {
+            @include flexCenter(row);
+            justify-content: space-between;
+            width: 30rem;
+            select {
+                width: 32%;
+                height: 3rem;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 1rem;
+            }
+        }
+    }
+}

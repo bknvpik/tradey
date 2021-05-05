@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/components/Item.scss';
 
-export default class Item extends Component {
+export default class Item extends Component<any, any> {
     render() {
         return (
             <div className="item">
@@ -10,17 +10,14 @@ export default class Item extends Component {
                 </div>
                 <div className="item-info">
                     <div className="item-name">
-                        Item Name
+                        {this.props.name}
                     </div>
                     <div className="wrapper">
                         <div className="item-details">
-                            <span>size: 9US</span>
-                            <span>condition: brand new</span>
+                            <span><b>size: </b>{this.props.size}</span>
+                            <span><b>condition: </b>{this.props.condition}</span>
                         </div>
                         <div className="item-trade">
-                            <div className="item-value">
-                                VALUE: 300$
-                            </div>
                             <button>TRADE</button>
                         </div>
                     </div>

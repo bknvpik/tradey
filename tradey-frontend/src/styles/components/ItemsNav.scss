@@ -11,6 +11,13 @@
         @include flexCenter(row);
         justify-content: space-between;
     }
+    .active {
+        color: $dark-gray;
+        border-bottom: 5px solid $orange;
+        &:hover {
+            border-bottom: 5px solid $orange;
+        }
+    }
     button {
         @include buttonStyling;
     }

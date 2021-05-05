@@ -8,9 +8,12 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.App {
+    height: 100vh;
+}
+
 .bg-dim {
     position: absolute;
-    z-index: -1;
     width: inherit;
     height: inherit;
     background: $gray;

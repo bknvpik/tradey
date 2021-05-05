@@ -17,20 +17,21 @@ export default class SignUp extends Component<any, any> {
     }
 
     handleSubmit(e: any) {
+        e.preventDefault();
+        if(this.state.password !== this.state.repeatPassword)
+            return;
         axios.post("http://localhost:3000/sign-up", {
-            user: {
-                email: this.state.email,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                password: this.state.password,
-                repeatPassword: this.state.repeatPassword
-            }
+            email: this.state.email,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            password: this.state.password,
+            createdAt: new Date().toISOString().slice(0, 19).replace('T', ' ')
         }).then(res => {
             console.log(res.data);
         }).catch(err => {
             console.log(err);
         })
-        e.preventDefault();
+        e.target.reset();
     };
 
     handleChange(e: any) {

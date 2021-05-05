@@ -8,7 +8,7 @@ import { ItemSizes } from './item-sizes.entity';
 
 @Entity()
 export class Item {
-  @PrimaryGeneratedColumn({ type: "int" })
+  @PrimaryGeneratedColumn("uuid")
   id: number;
 
   @Column({ type: "varchar", length: 200 })
@@ -16,9 +16,6 @@ export class Item {
 
   @Column({ type: "varchar", length: 255 })
   description: string;
-
-  @Column({ type: "int" })
-  value: number;
   
   @Column({ type: "timestamp" })
   createdAt: string;
@@ -26,19 +23,19 @@ export class Item {
   @Column({ type: "bool", default: true })
   available: boolean;
 
-  @OneToOne( type => ItemCategories )
+  @ManyToOne( type => ItemCategories )
   @JoinColumn()
   category: ItemCategories;
 
-  @OneToOne( type => ItemConditions )
+  @ManyToOne( type => ItemConditions )
   @JoinColumn()
   condition: ItemConditions;
 
-  @OneToOne( type => ItemSizes )
+  @ManyToOne( type => ItemSizes )
   @JoinColumn()
   size: ItemSizes;
 
-  @OneToMany( type => ItemImages, itemImages => itemImages.item )
+  @OneToMany( type => ItemImages, itemImages => itemImages.item, {cascade: ['insert', 'update']})
   images: ItemImages[];
 
   @ManyToOne( type => User, user => user.items )

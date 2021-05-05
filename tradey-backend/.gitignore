@@ -1,5 +1,6 @@
 ormconfig.json
-
+/src/auth/constants.ts
+/uploads
 # compiled output
 /dist
 /node_modules

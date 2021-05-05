@@ -7,6 +7,7 @@ import { Connection } from 'typeorm';
 import { UsersModule } from './users/users.module';
 import { ItemsModule } from './items/items.module';
 import { OffersModule } from './offers/offers.module';
+import { AuthModule } from './auth/auth.module';
 
 TypeOrmModule.forRootAsync({
   useFactory: async () =>
@@ -16,7 +17,7 @@ TypeOrmModule.forRootAsync({
 })
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, ItemsModule, OffersModule],
+  imports: [TypeOrmModule.forRoot(), UsersModule, ItemsModule, OffersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
