@@ -12,21 +12,24 @@ export class AuthService {
 
     async validateUser(username: string, password: string): Promise<any> {
         const user = await this.usersService.findOneByEmail(username);
-        if(user && bcrypt.compare(password, user.password)) {
+        if(user && await bcrypt.compare(password, user.password)) {
             const { password, ...result } = user;
             return result;
         }
         return null;
     }
 
-    async login(user: any): Promise<any> {
+    async login(user: any): Promise<string> {
         const payload = { username: user.email, sub: user.id };
-        return {
-            access_token: this.jwtService.sign(payload),
-        };
+        const jwt = await this.jwtService.signAsync(payload);
+        return jwt;
     }
 
     async signUp(userData: any): Promise<any> {
         return await this.usersService.createUser(userData);
+    }
+
+    async verifyCookie(cookie: string) {
+        return await this.jwtService.verifyAsync(cookie);
     }
 }

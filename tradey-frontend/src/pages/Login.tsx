@@ -1,55 +1,59 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
-export default class Login extends Component<any, any> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.clearData = this.clearData.bind(this);
-    }
+export default function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
 
-    handleSubmit(e: any) {
+    function handleSubmit(e: any) {
         e.preventDefault();
-        if(!this.state.email || !this.state.password)
+        setMessage("");
+        if(!email || !password) {
+            setMessage("Fields cannot be empty!");
             return;
+        }
         axios.post("http://localhost:3000/login", {
-            username: this.state.email,
-            password: this.state.password,
-        }).then(res => {
+            username: email,
+            password: password,
+        }, { withCredentials: true }).then(res => {
             console.log(res.data);
+            //TODO retreive jwt token adn save it to local storage
+            //localStorage.setItem('token', res.data.token);
         }).catch(err => {
             console.log(err);
+            setMessage(err.message);
         })
-        e.target.reset();
+        clearData();
     }
 
-    handleChange(e: any) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
+    function handleChangeEmail(e: any) {
+        setEmail(e.target.value);
     }
 
-    clearData() {
-        this.setState({ email: '', password: '' })
+    function handleChangePassword(e: any) {
+        setPassword(e.target.value);
     }
 
-    render() {
-        return (
-            <div className="login-signup">
-                <div className="bg-dim"></div>
-                <div className="login-signup-form">
-                    <form onSubmit={this.handleSubmit}>
-                        <input type="text" name="email" placeholder="e-mail" value={this.state.email} onChange={this.handleChange} />
-                        <input type="password" name="password" placeholder="password" value={this.state.password} onChange={this.handleChange} />
-                        <button type="submit">Login</button>
-                    </form>
-                </div>
+    function clearData() {
+        setEmail("");
+        setPassword("");
+    }
+
+    return(
+        <div className="login-signup">
+            <div className="bg-dim"></div>
+            <div className="login-signup-form">
+                <form onSubmit={handleSubmit}>
+                    <div className="message">{ message }</div>
+                    <input type="text" name="email" placeholder="e-mail" value={ email } onChange={ handleChangeEmail } />
+                    <input type="password" name="password" placeholder="password" value={ password } onChange={ handleChangePassword } />
+                    <button type="submit">Login</button>
+                    <div className="form-links">
+                        Forgot your password?
+                    </div>
+                </form>
             </div>
-        )
-    }
-}
+        </div>
+    );
+};
