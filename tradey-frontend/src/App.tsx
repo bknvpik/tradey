@@ -9,12 +9,14 @@ import SignUp from './pages/SignUp';
 import AddItem from './pages/AddItem';
 import ViewProfile from './pages/ViewProfile';
 import MakeOffer from './pages/MakeOffer';
+import MyItems from './pages/MyItems';
+import SignOut from './components/SignOut';
 
 export default class App extends Component {
   render() {
     return (
+      <div className="App">
       <Router>
-        <div className="App">
           <Nav />
           <Switch>
             <Route path="/" exact component={Browse}>
@@ -27,9 +29,11 @@ export default class App extends Component {
             <Route path="/add-item" component={AddItem} />
             <Route path="/view-profile" component={ViewProfile} />
             <Route path="/make-offer" component={MakeOffer} />
+            <Route path="/my-items" component={MyItems} />
+            <Route path="/sign-out" component={SignOut} />
           </Switch>
-        </div>
       </Router>
+      </div>
     );
   }
 }

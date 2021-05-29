@@ -12,10 +12,14 @@ export default function AboutPoint(props: any) {
                 </div>
                 <div className="text-wrapper">
                     <div className="title">
-                        <h1>{ props.title }</h1>
+                        <h1>
+                            { props.title }
+                        </h1>
                     </div>
                     <div className="info">
-                        <p>{ props.info }</p>
+                        <p>
+                            { props.info }
+                        </p>
                     </div>
                 </div>
             </div>

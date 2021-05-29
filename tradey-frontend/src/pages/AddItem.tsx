@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import '../styles/pages/AddItem.scss';
 
 interface State {
+    userId: string;
     categories: any[];
     sizes: any[];
     conditions: any[];
@@ -13,13 +14,14 @@ interface State {
     activeSize: number;
     activeCondition: number;
     messages: string;
-    image: any;
+    images: any;
 }
 
 export default class AddItem extends Component<any, State> {
     constructor(props: any) {
         super(props);
         this.state = {
+            userId: '',
             categories: [],
             sizes: [],
             conditions: [],
@@ -29,7 +31,7 @@ export default class AddItem extends Component<any, State> {
             activeSize: 1,
             activeCondition: 1,
             messages: '',
-            image: null
+            images: []
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -62,8 +64,9 @@ export default class AddItem extends Component<any, State> {
             formData.append('category', this.state.activeCategory.toString());
             formData.append('size', this.state.activeSize.toString());
             formData.append('condition', this.state.activeCondition.toString());
-            formData.append('user', '1');
-            formData.append('image', this.state.image, this.state.image.name);
+            formData.append('user', this.state.userId);
+            for(let i = 0; i < this.state.images.length; i++)
+                formData.append('images', this.state.images[i], this.state.images[i].name);
             
             http.post('/add-item', formData, {
             }).then(res => {
@@ -78,7 +81,7 @@ export default class AddItem extends Component<any, State> {
     };
 
     selectFile(e: any) {
-        this.setState({image: e.target.files[0]}, () => console.log(this.state.image))
+        this.setState({images: [...this.state.images, ...e.target.files]}, () => console.log(this.state.images))
     }
 
     handleChange(e: any) {
@@ -91,6 +94,7 @@ export default class AddItem extends Component<any, State> {
     clearData() {
         this.setState({
             ...this.state,
+            userId: '',
             name: '',
             description: '',
             activeCategory: 1,
@@ -100,12 +104,13 @@ export default class AddItem extends Component<any, State> {
     }
 
     componentDidMount() {
-        http.get(`/add-item`)
+        http.get(`/add-item`, {withCredentials: true})
         .then(res => {
+            const userId = res.data.user.sub;
           const categories = res.data.categories;
           const conditions = res.data.conditions;
           const sizes = res.data.sizes;
-          this.setState({ categories: categories, conditions: conditions, sizes: sizes });
+          this.setState({ userId: userId, categories: categories, conditions: conditions, sizes: sizes });
         })
     }
     render() {
@@ -119,7 +124,7 @@ export default class AddItem extends Component<any, State> {
                     <div className="image-inputs">
                         <label className="custom-file-upload">
                             <i className="fas fa-plus-circle"></i>
-                            <input type="file" name="image" onChange={this.selectFile}/>
+                            <input type="file" multiple name="images" onChange={this.selectFile}/>
                         </label> 
                     </div>
                     <input type="text" name="name" placeholder="name" onChange={this.handleChange}></input>

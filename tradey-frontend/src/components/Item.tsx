@@ -1,11 +1,10 @@
-import React from 'react'
 import '../styles/components/Item.scss';
 
 export default function Item(props: any) {
     return(
         <div className="item">
             <div className="item-img">
-                <img src="" alt="item_img"></img>
+                <img src={`assets/items-images/${ props.images[0].image }`} alt="item_img"></img>
             </div>
             <div className="item-info">
                 <div className="item-name">

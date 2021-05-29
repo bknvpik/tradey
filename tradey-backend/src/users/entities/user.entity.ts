@@ -3,8 +3,8 @@ import { Item } from 'src/items/entities/item.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn({ type: "int" })
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ type: "varchar", length: 200 })
   firstName: string;

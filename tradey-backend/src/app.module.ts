@@ -8,8 +8,6 @@ import { UsersModule } from './users/users.module';
 import { ItemsModule } from './items/items.module';
 import { OffersModule } from './offers/offers.module';
 import { AuthModule } from './auth/auth.module';
-import { jwtConstants } from './auth/constants';
-import { JwtModule } from '@nestjs/jwt';
 
 TypeOrmModule.forRootAsync({
   useFactory: async () =>
@@ -19,10 +17,7 @@ TypeOrmModule.forRootAsync({
 })
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, ItemsModule, OffersModule, AuthModule, JwtModule.register({
-    secret: jwtConstants.secret,
-    signOptions: { expiresIn: '60s' }
-  })],
+  imports: [TypeOrmModule.forRoot(), UsersModule, ItemsModule, OffersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

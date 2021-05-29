@@ -1,14 +1,10 @@
 @import '../index';
 
 .orange-button {
-    width: 10rem;
-    height: 4rem;
     border-radius: 20px;
-    color: $white;
-    background: $orange;
     cursor: pointer;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: auto;
     @include flexCenter(row);
     &:hover {
         background: $gray;

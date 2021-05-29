@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -25,8 +26,9 @@ export class AuthService {
         return jwt;
     }
 
-    async signUp(userData: any): Promise<any> {
-        return await this.usersService.createUser(userData);
+    async signUp(userData: any): Promise<User> {
+        const user = await this.usersService.createUser(userData);
+        return user;
     }
 
     async verifyCookie(cookie: string) {

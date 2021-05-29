@@ -35,8 +35,7 @@
             min-height: 4rem;
             color: $white;
             @include flexCenter(column);
-            cursor: pointer;
-            &:hover {
+            a {
                 color: $orange;
             }
         }

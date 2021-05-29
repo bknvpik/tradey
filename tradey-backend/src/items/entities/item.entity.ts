@@ -9,7 +9,7 @@ import { ItemSizes } from './item-sizes.entity';
 @Entity()
 export class Item {
   @PrimaryGeneratedColumn("uuid")
-  id: number;
+  id: string;
 
   @Column({ type: "varchar", length: 200 })
   name: string;
