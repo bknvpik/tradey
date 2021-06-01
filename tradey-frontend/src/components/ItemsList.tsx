@@ -8,7 +8,7 @@ export default function ItemsList(props: any) {
             </div>
             <div className="list">
                 { props.items.map((item: any) =>
-                    <Item key={item.id} name={item.name} size={item.size.size} condition={item.condition.condition} images={item.images} />
+                    <Item key={item.id} itemId={ item.id } name={item.name} size={item.size.size} condition={item.condition.condition} images={item.images} />
                 ) }
             </div>
         </div>

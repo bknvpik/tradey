@@ -23,6 +23,6 @@ import { ItemsService } from './items.service';
     ],
     controllers: [ItemsController],
     providers: [ItemsService],
-    exports: [TypeOrmModule]
+    exports: [TypeOrmModule, ItemsService]
 })
 export class ItemsModule {}

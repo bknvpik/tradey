@@ -46,18 +46,7 @@ export default class AddItem extends Component<any, State> {
             return;
         }
         else {
-            /*let dataArray = [
-                {name: this.state.name},
-                {description: this.state.description},
-                {createdAt: new Date().toISOString().slice(0, 19).replace('T', ' ')},
-                {category: this.state.activeCategory},
-                {size: this.state.activeSize},
-                {condition: this.state.activeCondition},
-                {user: 1},
-                {image: this.state.image}
-            ];*/
             let formData = new FormData();
-            //formData.append('newItem', JSON.stringify(dataArray));
             formData.append('name', this.state.name);
             formData.append('description', this.state.description);
             formData.append('createdAt', new Date().toISOString().slice(0, 19).replace('T', ' '));
@@ -124,7 +113,7 @@ export default class AddItem extends Component<any, State> {
                     <div className="image-inputs">
                         <label className="custom-file-upload">
                             <i className="fas fa-plus-circle"></i>
-                            <input type="file" multiple name="images" onChange={this.selectFile}/>
+                            <input type="file" multiple name="images" accept="image/*" onChange={this.selectFile}/>
                         </label> 
                     </div>
                     <input type="text" name="name" placeholder="name" onChange={this.handleChange}></input>

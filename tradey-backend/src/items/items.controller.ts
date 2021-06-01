@@ -26,6 +26,11 @@ export class ItemsController {
         return await this.itemsService.findByCategory(itemCategory);
     }
 
+    @Get('view-item/:itemId')
+    async viewItem(@Param('itemId') itemId: string): Promise<Item> {
+        return await this.itemsService.findOne(itemId);
+    }
+
     @Get('add-item')
     async getItemProperties(@Req() req: Request) {
         const cookie = req.cookies['jwt'];
@@ -41,8 +46,8 @@ export class ItemsController {
         storage: diskStorage({
             destination: "../tradey-frontend/public/assets/items-images",
             filename: (req, file, cb) => {
-                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
-                cb(null, `${randomName}${extname(file.originalname)}`)
+                const fileName = uuidv4();
+                cb(null, `${fileName}${extname(file.originalname)}`)
             }
         })
     }))
@@ -58,4 +63,5 @@ export class ItemsController {
         console.log(newItem);
         return await this.itemsService.createItem(newItem);
     }
+
 }

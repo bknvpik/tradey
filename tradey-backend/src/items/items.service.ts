@@ -23,6 +23,11 @@ export class ItemsService {
       private itemImagesRepository: Repository<ItemImages>,
     ) {}
 
+      async findOne(id: string): Promise<Item> {
+        const item = await this.itemsRepository.findOne(id);
+        return item;
+      }
+
       async findAll(): Promise<Item[]> {
         const items = await this.itemsRepository.find();
         return items;

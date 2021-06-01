@@ -6,6 +6,7 @@ import '../styles/pages/ViewProfile.scss';
 
 export default function ViewProfile(props: any) {
     const [userData, setUserData] = useState(Object);
+
     useEffect(() => {
         http.get('/view-profile', {withCredentials: true})
         .then(res => {

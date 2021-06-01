@@ -11,6 +11,7 @@ import ViewProfile from './pages/ViewProfile';
 import MakeOffer from './pages/MakeOffer';
 import MyItems from './pages/MyItems';
 import SignOut from './components/SignOut';
+import ViewItem from './pages/ViewItem';
 
 export default class App extends Component {
   render() {
@@ -30,6 +31,7 @@ export default class App extends Component {
             <Route path="/view-profile" component={ViewProfile} />
             <Route path="/make-offer" component={MakeOffer} />
             <Route path="/my-items" component={MyItems} />
+            <Route path="/view-item" component={ViewItem} />
             <Route path="/sign-out" component={SignOut} />
           </Switch>
       </Router>

@@ -27,7 +27,7 @@ export class UsersService {
         .leftJoinAndSelect("item.category", "category")
         .leftJoinAndSelect("item.size", "size")
         .leftJoinAndSelect("item.condition", "condition")
-        .leftJoinAndSelect("item.image", "image")
+        .leftJoinAndSelect("item.images", "images")
         .leftJoin("item.user", "user").where("user.email = :email", { email: username})
         .getMany();
         return items;
