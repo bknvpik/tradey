@@ -4,8 +4,8 @@ import { Role } from './role.entity';
 
 @Entity()
 export class UserRoles {
-  @PrimaryGeneratedColumn({ type: "int" })
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @OneToOne( type => User )
   @JoinColumn()

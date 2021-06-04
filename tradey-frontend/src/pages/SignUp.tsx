@@ -43,7 +43,7 @@ export default function SignUp(props: any) {
             firstName: firstName,
             lastName: lastName,
             password: password,
-            createdAt: new Date().toISOString().slice(0, 19).replace('T', ' ')
+            createdAt: new Date().toLocaleString()
         }).then(res => {
             setMessage(res.data);
         }).catch(err => {

@@ -12,6 +12,7 @@ import MakeOffer from './pages/MakeOffer';
 import MyItems from './pages/MyItems';
 import SignOut from './components/SignOut';
 import ViewItem from './pages/ViewItem';
+import MyOffers from './pages/MyOffers';
 
 export default class App extends Component {
   render() {
@@ -28,7 +29,8 @@ export default class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/add-item" component={AddItem} />
-            <Route path="/view-profile" component={ViewProfile} />
+            <Route path="/view-profile" exact component={ViewProfile} />
+            <Route path="/view-profile/my-offers" component={MyOffers} />
             <Route path="/make-offer" component={MakeOffer} />
             <Route path="/my-items" component={MyItems} />
             <Route path="/view-item" component={ViewItem} />

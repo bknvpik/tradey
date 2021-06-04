@@ -55,7 +55,7 @@ export default class Browse extends Component<any, State> {
                             )}
                         </div>
                     </div>
-                <ItemsList items={this.state.items} />
+                <ItemsList items={this.state.items} type="browse"/>
                 <Footer />
             </div>
         )

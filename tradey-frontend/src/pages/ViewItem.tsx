@@ -18,6 +18,7 @@ export default function ViewItem(props: any) {
         <div className="view-item">
             <div className="item-name">
                 {itemData.name}
+                {itemData.description}
             </div>
             <div className="gallery">
                 <img alt=""></img>

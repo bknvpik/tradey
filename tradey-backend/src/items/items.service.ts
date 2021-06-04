@@ -58,7 +58,7 @@ export class ItemsService {
         return removedItem;
       }
 
-      async findByCategory(itemCategory: string): Promise<Item[]> {
+      async findByCategory(itemCategory: string): Promise<any> {
         const items = await createQueryBuilder().select("item").from(Item, "item")
         .leftJoinAndSelect("item.category", "category")
         .leftJoinAndSelect("item.size", "size")
@@ -67,5 +67,16 @@ export class ItemsService {
         .where("category.category = :category", { category: itemCategory })
         .getMany();
         return items;
+      }
+
+      async findItemAndDetails(itemId: string): Promise<any> {
+        const item = await createQueryBuilder().select("item").from(Item, "item")
+        .leftJoinAndSelect("item.category", "category")
+        .leftJoinAndSelect("item.size", "size")
+        .leftJoinAndSelect("item.condition", "condition")
+        .leftJoinAndSelect("item.images", "images")
+        .where("item.id = :id", { id: itemId })
+        .getOne();
+        return item;
       }
 }
