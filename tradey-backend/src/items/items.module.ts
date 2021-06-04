@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from 'src/auth/auth.module';
 import { ItemCategories } from './entities/item-categories.entity';
 import { ItemConditions } from './entities/item-conditions.entity';
 import { ItemImages } from './entities/item-images.entity';
@@ -17,10 +18,11 @@ import { ItemsService } from './items.service';
             ItemSizes,
             ItemConditions,
             ItemImages
-        ])
+        ]),
+        AuthModule
     ],
     controllers: [ItemsController],
-    exports: [TypeOrmModule],
-    providers: [ItemsService]
+    providers: [ItemsService],
+    exports: [TypeOrmModule, ItemsService]
 })
 export class ItemsModule {}

@@ -7,12 +7,18 @@ import About from './pages/About';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import AddItem from './pages/AddItem';
+import ViewProfile from './pages/ViewProfile';
+import MakeOffer from './pages/MakeOffer';
+import MyItems from './pages/MyItems';
+import SignOut from './components/SignOut';
+import ViewItem from './pages/ViewItem';
+import MyOffers from './pages/MyOffers';
 
 export default class App extends Component {
   render() {
     return (
+      <div className="App">
       <Router>
-        <div className="App">
           <Nav />
           <Switch>
             <Route path="/" exact component={Browse}>
@@ -23,9 +29,15 @@ export default class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/add-item" component={AddItem} />
+            <Route path="/view-profile" exact component={ViewProfile} />
+            <Route path="/view-profile/my-offers" component={MyOffers} />
+            <Route path="/make-offer" component={MakeOffer} />
+            <Route path="/my-items" component={MyItems} />
+            <Route path="/view-item" component={ViewItem} />
+            <Route path="/sign-out" component={SignOut} />
           </Switch>
-        </div>
       </Router>
+      </div>
     );
   }
 }

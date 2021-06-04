@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { createQueryBuilder, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { Item } from 'src/items/entities/item.entity';
 
 @Injectable()
 export class UsersService {
@@ -11,29 +12,39 @@ export class UsersService {
         private usersRepository: Repository<User>,
       ) {}
       
-      findAll(): Promise<User[]> {
-        return this.usersRepository.find();
-      }
-    
-      findOne(id: string): Promise<User> {
-        return this.usersRepository.findOne(id);
+      async findAllUsers(): Promise<User[]> {
+        const users = this.usersRepository.find();
+        return users;
       }
 
-      findOneByEmail(email: string): Promise<User | undefined> {
-        return this.usersRepository.findOne({ email: email });
+      async findOneByEmail(username: string): Promise<User | undefined> {
+        const user = await this.usersRepository.findOne({ email: username });
+        return user;
       }
       
-      async createUser(userData: any): Promise<any> {
+      async getUserItems(username: string): Promise<Item[] | undefined> {
+        const items = await createQueryBuilder().select("item").from(Item, "item")
+        .leftJoinAndSelect("item.category", "category")
+        .leftJoinAndSelect("item.size", "size")
+        .leftJoinAndSelect("item.condition", "condition")
+        .leftJoinAndSelect("item.images", "images")
+        .leftJoin("item.user", "user").where("user.email = :email", { email: username})
+        .getMany();
+        return items;
+      }
+
+      async createUser(userData: any): Promise<User> {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(userData.password, salt);
         const user = {
           ...userData,
           password: hashedPassword,
         }
-        this.usersRepository.save(user);
+        const createdUser = await this.usersRepository.save(user);
+        return createdUser;
       }
 
-      async remove(id: string): Promise<void> {
-        await this.usersRepository.delete(id);
+      async remove(username: string): Promise<void> {
+        await this.usersRepository.delete({ email: username });
       }
 }

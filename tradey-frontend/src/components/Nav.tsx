@@ -24,6 +24,9 @@ export default class Nav extends Component {
                     <Link to="/sign-up">
                         <button>Sign Up</button>
                     </Link>
+                    <Link to="/view-profile">
+                        <button>My profile</button>
+                    </Link>
                     <Link to="/add-item">
                         <button className="trade-btn">TRADE</button>
                     </Link>

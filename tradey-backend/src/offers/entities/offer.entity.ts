@@ -3,8 +3,8 @@ import { Item } from 'src/items/entities/item.entity';
 
 @Entity()
 export class Offer {
-  @PrimaryGeneratedColumn({ type: "int" })
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ type: "varchar", length: 200, default: "pending" })
   status: string;
@@ -13,8 +13,8 @@ export class Offer {
   createdAt: string;
 
   @ManyToOne( type => Item, item => item.offers )
-  item: Item;
+  itemId: Item;
 
   @ManyToOne( type => Item, item => item.offersTo )
-  itemOffered: Item;
+  itemOfferedId: Item;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { createQueryBuilder, DeepPartial, Repository } from 'typeorm';
+import { createQueryBuilder, DeepPartial, DeleteResult, Repository } from 'typeorm';
 import { Item } from './entities/item.entity';
 import { ItemCategories } from './entities/item-categories.entity';
 import { ItemConditions } from './entities/item-conditions.entity';
@@ -23,34 +23,60 @@ export class ItemsService {
       private itemImagesRepository: Repository<ItemImages>,
     ) {}
 
-      findAll(): Promise<Item[]> {
-        return this.itemsRepository.find();
+      async findOne(id: string): Promise<Item> {
+        const item = await this.itemsRepository.findOne(id);
+        return item;
+      }
+
+      async findAll(): Promise<Item[]> {
+        const items = await this.itemsRepository.find();
+        return items;
       }
 
       async getCategories(): Promise<ItemCategories[]>{
-        return await this.itemCategoriesRepository.find();
+        const categories = await this.itemCategoriesRepository.find();
+        return categories;
       }
 
       async getSizes(): Promise<ItemSizes[]>{
-        return await this.itemSizesRepository.find();
+        const itemSizes = await this.itemSizesRepository.find();
+        return itemSizes;
       }
 
       async getConditions(): Promise<ItemConditions[]>{
-        return await this.itemConditionsRepository.find();
+        const itemConditions = await this.itemConditionsRepository.find();
+        return itemConditions;
       }
 
-      async createItem(item: AddItemDto) {
-        await this.itemsRepository.save(item);
+      async createItem(item: AddItemDto): Promise<Item> {
+        const createdItem = await this.itemsRepository.save(item);
+        return createdItem;
       }
 
-      async findByCategory(itemCategory: string): Promise<Item[]> {
+      async removeItem(itemId: string): Promise<DeleteResult> {
+        const removedItem = await this.itemsRepository.delete({ id: itemId });
+        return removedItem;
+      }
+
+      async findByCategory(itemCategory: string): Promise<any> {
         const items = await createQueryBuilder().select("item").from(Item, "item")
         .leftJoinAndSelect("item.category", "category")
         .leftJoinAndSelect("item.size", "size")
         .leftJoinAndSelect("item.condition", "condition")
-        .leftJoinAndSelect("item.images", "image")
+        .leftJoinAndSelect("item.images", "images")
         .where("category.category = :category", { category: itemCategory })
         .getMany();
         return items;
+      }
+
+      async findItemAndDetails(itemId: string): Promise<any> {
+        const item = await createQueryBuilder().select("item").from(Item, "item")
+        .leftJoinAndSelect("item.category", "category")
+        .leftJoinAndSelect("item.size", "size")
+        .leftJoinAndSelect("item.condition", "condition")
+        .leftJoinAndSelect("item.images", "images")
+        .where("item.id = :id", { id: itemId })
+        .getOne();
+        return item;
       }
 }

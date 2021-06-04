@@ -9,7 +9,7 @@ import { ItemSizes } from './item-sizes.entity';
 @Entity()
 export class Item {
   @PrimaryGeneratedColumn("uuid")
-  id: number;
+  id: string;
 
   @Column({ type: "varchar", length: 200 })
   name: string;
@@ -35,15 +35,15 @@ export class Item {
   @JoinColumn()
   size: ItemSizes;
 
-  @OneToMany( type => ItemImages, itemImages => itemImages.item, {cascade: ['insert', 'update']})
+  @OneToMany( type => ItemImages, itemImages => itemImages.item, {cascade: ['insert', 'update', 'remove']} )
   images: ItemImages[];
 
   @ManyToOne( type => User, user => user.items )
   user: User;
 
-  @OneToMany( type => Offer, offer => offer.item )
+  @OneToMany( type => Offer, offer => offer.itemId, {cascade: ['insert', 'update', 'remove']} )
   offers: Offer[];
 
-  @OneToMany( type => Offer, offer => offer.itemOffered )
+  @OneToMany( type => Offer, offer => offer.itemOfferedId, {cascade: ['insert', 'update', 'remove']} )
   offersTo: Offer[];
 }
