@@ -1,8 +1,12 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Request, Response } from 'express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { AuthService } from 'src/auth/auth.service';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { UsersService } from './users.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Controller()
 export class UsersController {  
@@ -36,17 +40,23 @@ export class UsersController {
         return 'logged out!';
     }
     
+    @Get('verify-cookie')
+    async verifyCookie(@Req() req: Request) {
+      const cookie = req.cookies['jwt'];
+      return await this.authService.verifyCookie(cookie);
+    }
+    
     @Get('view-profile')
     async viewProfile(@Req() req: Request) {
         const cookie = req.cookies['jwt'];
         const data = await this.authService.verifyCookie(cookie);
   
-        const user = await this.usersService.findOneByEmail(data.username);
+        const user = await this.usersService.getUserDetails(data.username, data.sub);
         console.log(user);
         return user;
     }
   
-    @Get('my-items')
+    @Get('view-profile/my-items')
     async myItems(@Req() req: Request) {
       const cookie = req.cookies['jwt'];
       const data = await this.authService.verifyCookie(cookie);
@@ -54,5 +64,25 @@ export class UsersController {
       const userItems = await this.usersService.getUserItems(data.username);
       console.log(userItems);
       return userItems;
+    }
+
+    @UseInterceptors(FileInterceptor('image', {
+      storage: diskStorage({
+          destination: "../tradey-frontend/public/assets/users-images",
+          filename: (req, file, cb) => {
+              const fileName = uuidv4();
+              cb(null, `${fileName}${extname(file.originalname)}`)
+          }
+      })
+    }))
+    @Put('view-profile/edit-profile')
+    async editProfile(@Body() userData: any, @UploadedFile() image: Express.Multer.File) {
+      console.log(userData)
+      console.log(image);
+      userData.image = image.filename;
+      
+      const newUserDetails = await this.usersService.editUserDetails(userData);
+      console.log(userData);
+      return newUserDetails;
     }
 }

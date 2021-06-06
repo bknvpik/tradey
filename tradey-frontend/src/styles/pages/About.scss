@@ -43,18 +43,6 @@
             padding: 0;
         }
     }
-    .how-it-works {
-        width: 100%;
-        height: 30vh;
-        background: $gray;
-        @include flexCenter(row);
-        h1 {
-            font-size: 3rem;
-            color: $white;
-            margin: 0;
-            padding: 0;
-        }
-    }
 
     .how-content {
         display: grid;
@@ -70,6 +58,7 @@
         display: grid;
         grid-template-columns: 300px 15% 1fr 300px;
         grid-template-rows: 50% 1fr 1fr;
+        box-shadow: inset 0px -10px 10px -10px $dark-gray;
         h1 {
             grid-column-start: 3;
             font-size: 3rem;

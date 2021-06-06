@@ -16,6 +16,11 @@ export class ItemsController {
         private readonly authService: AuthService
     ) {}
     
+    @Get('')
+    async default() {
+        return await this.itemsService.findByCategory('clothing');
+    }
+    
     @Get('browse')
     async browseDefault() {
         return await this.itemsService.findByCategory('clothing');

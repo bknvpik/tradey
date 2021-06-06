@@ -3,11 +3,20 @@ import { User } from './user.entity';
 
 @Entity()
 export class UserDetails {
-  @PrimaryGeneratedColumn({ type: "int" })
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Column({ type: "varchar", length: 200, nullable: true })
+  firstName: string;
+
+  @Column({ type: "varchar", length: 200, nullable: true })
+  lastName: string;
 
   @Column({ type: "varchar", length: 200 })
   country: string;
+
+  @Column({ type: "varchar", length: 200 })
+  city: string;
 
   @Column({ type: "varchar", length: 200 })
   zipCode: string;
@@ -21,8 +30,8 @@ export class UserDetails {
   @Column({ type: "int", default: 0 })
   rating: number;
 
-  @Column({ type: "varchar", length: 255 })
-  profileImage: string;
+  @Column({ type: "varchar", length: 255, default: "default-user-img.png" })
+  image: string;
 
   @OneToOne( type => User )
   @JoinColumn()

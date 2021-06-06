@@ -7,7 +7,7 @@ export default function MyItems(props: any) {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        http.get('/my-items', {withCredentials: true})
+        http.get('/view-profile/my-items', {withCredentials: true})
         .then(res => {
             setItems(res.data);
             console.log(res.data);

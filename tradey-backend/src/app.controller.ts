@@ -7,5 +7,4 @@ export class AppController {
   about(): string {
     return "Renders about page";
   }
-
 }

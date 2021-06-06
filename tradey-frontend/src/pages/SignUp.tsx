@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import Input from '../components/Input';
+import OrangeButton from '../components/OrangeButton';
 import http from '../http-common';
 
 export default function SignUp(props: any) {
     const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -14,7 +13,7 @@ export default function SignUp(props: any) {
 
     function handleSubmit(e: any) {
         e.preventDefault();
-        if(email && firstName && lastName && password && repeatPassword)
+        if(email && password && repeatPassword)
             setMessage("");
         else {
             setMessage("Fill all fields!");
@@ -40,8 +39,6 @@ export default function SignUp(props: any) {
         }
         http.post("/sign-up", {
             email: email,
-            firstName: firstName,
-            lastName: lastName,
             password: password,
             createdAt: new Date().toLocaleString()
         }).then(res => {
@@ -50,6 +47,7 @@ export default function SignUp(props: any) {
             setMessage(err.message);
             console.log(err);
         })
+        e.target.reset();
         clearData();
     };
 
@@ -58,14 +56,6 @@ export default function SignUp(props: any) {
             e.target.style.background = colors.orange :
             e.target.style.background = colors.white;
         setEmail(e.target.value);
-    }
-
-    function handleChangeFirstName(e: any) {
-        setFirstName(capitalizeFirstLetter(e.target.value));
-    }
-
-    function handleChangeLastName(e: any) {
-        setLastName(capitalizeFirstLetter(e.target.value));
     }
 
     function handleChangePassword(e: any) {
@@ -93,15 +83,9 @@ export default function SignUp(props: any) {
     function validatePasswordLength(pass: string) {
         return pass.length >= 8;
     }
-
-    function capitalizeFirstLetter(text: string) {
-        return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
-    }
       
     function clearData() {
         setEmail("");
-        setFirstName("");
-        setLastName("");
         setPassword("");
         setRepeatPassword("");
     }
@@ -112,18 +96,10 @@ export default function SignUp(props: any) {
             <div className="login-signup-form">
                 <form onSubmit={ handleSubmit }>
                     <div className="message">{ message }</div>
-                    <input type="text" name="email" placeholder="e-mail" value={ email } onChange={ handleChangeEmail } />
-                    <input type="text" name="firstName" placeholder="first name" value={ firstName } onChange={ handleChangeFirstName } />
-                    <input type="text" name="lastName" placeholder="last name" value={ lastName } onChange={ handleChangeLastName } />
-                    <input type="password" name="password" placeholder="password" value={ password } onChange={ handleChangePassword } />
-                    <input type="password" name="repeatPassword" placeholder=" repeat password" value={ repeatPassword } onChange={ handleChangeRepeatPassword } />
-                    <button type="submit">Sign Up</button>
-                    <div className="form-links">
-                        Already registered? &nbsp;
-                        <Link to="/login">
-                            Sign in
-                        </Link>
-                    </div>
+                    <Input type="text" name="email" placeholder="e-mail" value={ email } onChange={ handleChangeEmail } />
+                    <Input type="password" name="password" placeholder="password" value={ password } onChange={ handleChangePassword } />
+                    <Input type="password" name="repeatPassword" placeholder="repeat password" value={ password } onChange={ handleChangeRepeatPassword } />
+                    <OrangeButton type="submit" text="SIGN UP" />
                 </form>
             </div>
         </div>

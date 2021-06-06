@@ -12,7 +12,7 @@
     .logo-container {
         @include svgContainer;
         grid-column-start: 2;
-        }
+    }
     img {
         display: block;
         width: 100%; 
@@ -20,25 +20,20 @@
     .nav-buttons {
         @include flexCenter(row);
         padding-left: 10rem;
-        justify-content: space-between;
+        justify-content: space-around;
         grid-column-start: 3;
         button {
-            @include buttonStyling;
+            height: 50%;
+            margin-top: 0;
         }
-        .trade-btn {
-            background: $orange;
-            color: $white;
-            width: 10rem;
-            height: 3rem;
-            border-radius: 15px;
-            border: none;
-            &:hover {
-                border-bottom: none;
-            }
-            &:focus {
-                border: none;
-                color: $white;
-            }
+        a {
+            text-decoration: none;
+            display: block;
+            @include flexCenter(row);
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
     }
 }

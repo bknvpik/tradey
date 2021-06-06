@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/components/Item.scss';
+import { AuthContext } from './AuthContext';
 
 export default function Item(props: any) {
+    const { logged } = useContext(AuthContext);
+
     function handleSelect() {
         props.setSelectedItem(props.item.id);
         console.log(props.item.id);
@@ -22,7 +26,7 @@ export default function Item(props: any) {
                         <span><b>size: </b>{ props.item.size.size }</span>
                         <span><b>condition: </b>{ props.item.condition.condition }</span>
                     </div>
-                    {props.type === "browse" &&
+                    {(props.type === "browse" && logged) &&
                     <Link to={`/make-offer/${ props.item.id }`} className="item-trade">
                         <button>TRADE</button>
                     </Link>

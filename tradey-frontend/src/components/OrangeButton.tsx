@@ -1,10 +1,9 @@
-import React from 'react'
 import '../styles/components/OrangeButton.scss';
 
 export default function OrangeButton(props: any) {
     return (
-        <div className="orange-button">
+        <button className="orange-button" type={ props.type }>
             { props.text }
-        </div>
+        </button>
     )
 }
