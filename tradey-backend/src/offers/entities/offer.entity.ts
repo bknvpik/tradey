@@ -13,8 +13,8 @@ export class Offer {
   createdAt: string;
 
   @ManyToOne( type => Item, item => item.offers )
-  itemId: Item;
+  item: Item;
 
   @ManyToOne( type => Item, item => item.offersTo )
-  itemOfferedId: Item;
+  itemOffered: Item;
 }

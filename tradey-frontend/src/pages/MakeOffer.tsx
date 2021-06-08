@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import '../styles/pages/MakeOffer.scss';
 import Footer from '../components/Footer';
 import ItemsList from '../components/ItemsList';
 import HeaderTitle from '../components/HeaderTitle';
@@ -10,23 +11,23 @@ export default function MakeOffer(props: any) {
     const [item, setItem] = useState(Object);
     const [items, setItems] = useState([]);
     const [status, setStatus] = useState(false);
-    const [selectedItem, setSelectedItem] = useState("");
-    const [test, setTest] = useState(Object);
+    const [status2, setStatus2] = useState(false);
+    const [selectedId, setSelectedId] = useState("");
+    const [offeredItem, setOfferedItem] = useState(Object);
+    const [message, setMessage] = useState("");
     const url = window.location.pathname;
 
     function handleSubmit() {
-        //console.log(item.id)
         http.post("/make-offer", {
             createdAt: new Date().toLocaleString(),
-            itemId: item.id,
-            itemOfferedId: selectedItem,
+            item: item.id,
+            itemOffered: offeredItem.id,
         }).then(res => {
-            //setMessage(res.data);
+            setMessage("Offer created!");
         }).catch(err => {
-            //setMessage(err.message);
+            setMessage(err.message);
             console.log(err);
         })
-        //clearData();
     }
 
     useEffect(() => {
@@ -41,28 +42,37 @@ export default function MakeOffer(props: any) {
     }, [url]);
 
     useEffect(() => {
-        console.log(selectedItem);
-        http.get(`/make-offer/${selectedItem}`, {withCredentials: true})
+        console.log(selectedId);
+        http.get(`/make-offer/${selectedId}`, {withCredentials: true})
         .then(res => {
-            setTest(res.data.item);
+            if(status && selectedId)
+            {
+            setOfferedItem(res.data.item);
+            console.log(offeredItem)
+            setStatus2(true);
+            }
         }).catch(err => {
         console.log(err);
     });
-    }, [selectedItem])
+    }, [selectedId])
 
     return (
         <div className="make-offer">
-            <HeaderTitle text="Make An Offer"/>
-            <div className="current-offer">
-                {status && <Item item={ item } />}
-                {selectedItem && <Item item = { test } />}
-                <button onClick={handleSubmit}>Make Offer</button>
+            <HeaderTitle text="Make An Offer" style={{ height: "15vh" }} />
+            <div className="content">
+                <div className="messages">{message}</div>
+                <div className="offer">
+                    <div className="offer-wrapper">
+                        {status && <Item item={ item } />}
+                        {status2 && <Item item = { offeredItem } />}
+                    </div>
+                    <div className="button-wrapper">
+                        <OrangeButton text="TRADE" onClick={ handleSubmit }/>
+                    </div>
+                </div>
             </div>
-            <HeaderTitle text="Select Your Item"/>
-            <div className="selection">
-                {status && <ItemsList items={ items } type="offer" setSelectedItem={setSelectedItem}/>}
-                <OrangeButton text="TRADE"/>
-            </div>
+            <HeaderTitle text="Select Your Item" style={{ height: "15vh" }} />
+                {status && <ItemsList items={ items } type="offer" setSelectedItem={setSelectedId}/>}
             <Footer />
         </div>
     )

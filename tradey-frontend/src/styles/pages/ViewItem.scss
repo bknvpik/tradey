@@ -1,0 +1,12 @@
+@import '../index';
+
+.view-item {
+    .content {
+        width: 100%;
+        min-height: 75vh;
+        @include flexCenter(row);
+        .item {
+            grid-column-start: 2;
+        }
+    }
+}

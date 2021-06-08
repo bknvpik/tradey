@@ -1,0 +1,37 @@
+@import '../index';
+
+.make-offer {
+    .content {
+        @include useGrid();
+        width: 100%;
+        min-height: 75vh;
+        grid-template-rows: 10% 1fr;
+        .items-list {
+            grid-column-start: 2;
+        }
+        .messages {
+            width: 100%;
+            height: 100%;
+            @include flexCenter(row);
+            grid-column-start: 2;
+            font-weight: bold;
+            text-align: center;
+        }
+        .offer {
+            grid-column-start: 2;
+            @include flexCenter(column);
+            .offer-wrapper {
+                width: 100%;
+                @include flexCenter(row);
+            }
+            .button-wrapper {
+                width: 50%;
+                height: 10%;
+                button {
+                    width: 100%;
+                    height: 100%;
+                }
+            }   
+        }
+    }
+}

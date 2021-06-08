@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
@@ -27,7 +27,7 @@ export default class Browse extends Component<any, State> {
     paths: string[];
 
     componentDidMount() {
-        axios.get(`http://localhost:3000${this.url}`)
+        axios.get(`http://localhost:3000${this.url}`, { withCredentials: true })
         .then(res => {
           const data = res.data;
           this.setState({ items: data });
@@ -35,7 +35,7 @@ export default class Browse extends Component<any, State> {
     }
 
     handleChange() {
-        axios.get(`http://localhost:3000/browse/${this.state.category}`)
+        axios.get(`http://localhost:3000/browse/${this.state.category}`, { withCredentials: true })
         .then(res => {
           const data = res.data;
           this.setState({ items: data });

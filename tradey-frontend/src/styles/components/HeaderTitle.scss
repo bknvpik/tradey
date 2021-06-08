@@ -2,10 +2,13 @@
 
 .header-title {
     width: 100%;
-    height: 10rem;
-    color: $white;
+    height: 30vh;
     background: $gray;
-    font-weight: bold;
-    font-size: 3rem;
     @include flexCenter(row);
+    h1 {
+        font-size: 3rem;
+        color: $white;
+        margin: 0;
+        padding: 0;
+    }
 }

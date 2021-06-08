@@ -41,9 +41,9 @@ export class Item {
   @ManyToOne( type => User, user => user.items )
   user: User;
 
-  @OneToMany( type => Offer, offer => offer.itemId, {cascade: ['insert', 'update', 'remove']} )
+  @OneToMany( type => Offer, offer => offer.item, {cascade: true} )
   offers: Offer[];
 
-  @OneToMany( type => Offer, offer => offer.itemOfferedId, {cascade: ['insert', 'update', 'remove']} )
+  @OneToMany( type => Offer, offer => offer.itemOffered, {cascade: true} )
   offersTo: Offer[];
 }
