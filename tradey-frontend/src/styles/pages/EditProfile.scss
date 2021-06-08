@@ -4,14 +4,22 @@
     height: auto;
     .content {
         @include useGrid;
-        grid-template-rows: 15% 1fr;
+        grid-template-rows: 10% 1fr;
         width: 100%;
         min-height: 100vh;
+
         form {
             @include flexCenter(column);
             justify-content: space-around;
             grid-column-start: 2;
             padding: 3rem 0 3rem 0;
+            .messages {
+                min-height: 5%;
+                width: 50%;
+                grid-column-start: 2;
+                font-weight: bold;
+                text-align: center;
+            }
             select {
                 width: 50%;
                 height: 15%;
@@ -22,8 +30,34 @@
                 box-shadow: 0 0 3px $gray;
                 font-family: 'Montserrat', sans-serif;
                 font-size: 25px;
+                text-align-last: center;
                 &:focus {
                     outline: none;
+                }
+            }
+            .custom-upload-file {
+                width: 50%;
+                height: 15%;
+                display: block;
+                @include flexCenter(row);
+                border-radius: 20px;
+                background: $sandy;
+                color: $dark-gray;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 25px;
+                font-weight: bold;
+                content: "select image";
+                cursor: pointer;
+                border: none;
+                &:hover {
+                    background: $dark-gray;
+                    color: $white;
+                }
+                &:focus {
+                    outline: none;
+                }
+                input {
+                    display: none;
                 }
             }
         }

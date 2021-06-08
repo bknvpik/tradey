@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import http from '../http-common';
 import Footer from '../components/Footer';
 import '../styles/pages/AddItem.scss';
@@ -96,10 +96,10 @@ export default class AddItem extends Component<any, State> {
         http.get(`/add-item`, {withCredentials: true})
         .then(res => {
             const userId = res.data.user.sub;
-          const categories = res.data.categories;
-          const conditions = res.data.conditions;
-          const sizes = res.data.sizes;
-          this.setState({ userId: userId, categories: categories, conditions: conditions, sizes: sizes });
+            const categories = res.data.categories;
+            const conditions = res.data.conditions;
+            const sizes = res.data.sizes;
+            this.setState({ userId: userId, categories: categories, conditions: conditions, sizes: sizes });
         })
     }
     render() {
@@ -109,10 +109,9 @@ export default class AddItem extends Component<any, State> {
                     <h1>Add New Item</h1>
                 </div>
                 <form className="add-item-form" onSubmit={this.handleSubmit}>
-                    <h2>Add Images</h2>
                     <div className="image-inputs">
                         <label className="custom-file-upload">
-                            <i className="fas fa-plus-circle"></i>
+                            <div>upload images</div>
                             <input type="file" multiple name="images" accept="image/*" onChange={this.selectFile}/>
                         </label> 
                     </div>

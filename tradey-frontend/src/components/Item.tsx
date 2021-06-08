@@ -26,13 +26,13 @@ export default function Item(props: any) {
                         <span><b>size: </b>{ props.item.size.size }</span>
                         <span><b>condition: </b>{ props.item.condition.condition }</span>
                     </div>
-                    {(props.type === "browse" && logged) &&
+                    {(props.type === "browse") &&
                     <Link to={`/make-offer/${ props.item.id }`} className="item-trade">
                         <button>TRADE</button>
                     </Link>
                     }
                     {props.type === "offer" &&
-                        <button onClick={ handleSelect }>Select</button>
+                        <button onClick={ handleSelect } style={{ width: "20%" }}>Select</button>
                     }
 
                 </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './styles/App.scss';
 import Nav from './components/Nav';
@@ -18,7 +18,6 @@ import NotFound from './components/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthContext } from './components/AuthContext';
 import { Redirect } from 'react-router';
-import http from './http-common';
 
 export default function App() {
   const [logged, setLogged] = useState(false);
@@ -36,11 +35,6 @@ export default function App() {
           <Route path="/login" component={Login} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/view-item" component={ViewItem} />
-          <ProtectedRoute
-            exact
-            path="/browse"
-            component={Browse}
-          />
           <ProtectedRoute
             exact
             path="/browse/clothing"

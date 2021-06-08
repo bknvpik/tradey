@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import { Component } from 'react';
 import '../styles/pages/EditProfile.scss';
 import HeaderTitle from '../components/HeaderTitle';
 import Input from '../components/Input';
@@ -8,7 +8,6 @@ import Footer from '../components/Footer';
 import OrangeButton from '../components/OrangeButton';
 
 interface State {
-    userDetails: any;
     userId: string;
     firstName: string;
     lastName: string;
@@ -18,6 +17,7 @@ interface State {
     address1: string;
     address2: string;
     image: any;
+    message: string;
 }
 
 export default class EditProfile extends Component<any, State> {
@@ -28,7 +28,6 @@ export default class EditProfile extends Component<any, State> {
     constructor(props: any) {
         super(props);
         this.state = {
-            userDetails: {},
             userId: "",
             firstName: "",
             lastName: "",
@@ -37,7 +36,8 @@ export default class EditProfile extends Component<any, State> {
             zipCode: "",
             address1: "",
             address2: "",
-            image: null
+            image: null,
+            message: ""
         }
         this.style = {width: "50%", height: "15%"}
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,7 +49,16 @@ export default class EditProfile extends Component<any, State> {
         http.get('view-profile/about-me', {withCredentials: true})
         .then(res => {
             console.log(res.data);
-            this.setState({ userDetails: res.data });
+            this.setState({ 
+                userId: res.data.user.id,
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                country: res.data.country,
+                city: res.data.city,
+                zipCode: res.data.zipCode,
+                address1: res.data.address1,
+                address2: res.data.address2
+            });
         })
         .catch(err => {
             console.log(err);
@@ -70,7 +79,7 @@ export default class EditProfile extends Component<any, State> {
     handleSubmit(e: any) {
         e.preventDefault();
         let formData = new FormData();
-            formData.append('userId', this.state.userDetails.user.id);
+            formData.append('userId', this.state.userId);
             formData.append('firstName', this.state.firstName);
             formData.append('lastName', this.state.lastName);
             formData.append('country', this.state.country);
@@ -78,15 +87,16 @@ export default class EditProfile extends Component<any, State> {
             formData.append('zipCode', this.state.zipCode);
             formData.append('address1', this.state.address1);
             formData.append('address2', this.state.address2);
-            formData.append('image', this.state.image[0], this.state.image[0].name);
+            if(this.state.image)
+                formData.append('image', this.state.image[0], this.state.image[0].name);
             console.log(formData);
             http.put('view-profile/edit-profile', formData, {
             }).then(res => {
                 console.log(res.data);
+                this.setState({ message: "Saved Changes!"});
             }).catch(err => {
                 console.log(err);
             })
-        e.target.reset();
     }
 
     render() {
@@ -96,9 +106,10 @@ export default class EditProfile extends Component<any, State> {
                 <div className="content">
                     <ProfileNav />
                     <form onSubmit={ this.handleSubmit }>
-                        <Input type="text" name="firstName" onChange={ this.handleChange } placeholder="first name" style={this.style} />
-                        <Input type="text" name="lastName" onChange={ this.handleChange } placeholder="last name" style={this.style} />
-                        <select name="country" onChange={ this.handleChange }>
+                        <div className="messages"> { this.state.message } </div>
+                        <Input type="text" name="firstName" onChange={ this.handleChange } placeholder="first name" value={ this.state.firstName } style={this.style} />
+                        <Input type="text" name="lastName" onChange={ this.handleChange } placeholder="last name" value={ this.state.lastName } style={this.style} />
+                        <select name="country" onChange={ this.handleChange } value={ this.state.country } >
                             <option value="Afganistan">Afghanistan</option>
                             <option value="Albania">Albania</option>
                             <option value="Algeria">Algeria</option>
@@ -346,11 +357,14 @@ export default class EditProfile extends Component<any, State> {
                             <option value="Zambia">Zambia</option>
                             <option value="Zimbabwe">Zimbabwe</option>
                         </select>
-                        <Input type="text" name="city" onChange={ this.handleChange } placeholder="city" style={this.style} />
-                        <Input type="text" name="zipCode" onChange={ this.handleChange } placeholder="ZIP code" style={this.style} />
-                        <Input type="text" name="address1" onChange={ this.handleChange } placeholder="address 1" style={this.style} />
-                        <Input type="text" name="address2" onChange={ this.handleChange } placeholder="address 2" style={this.style} />
-                        <input type="file" name="image" accept="image/*" onChange={ this.selectFile }></input><br/>
+                        <Input type="text" name="city" onChange={ this.handleChange } placeholder="city" value={ this.state.city } style={this.style} />
+                        <Input type="text" name="zipCode" onChange={ this.handleChange } placeholder="ZIP code" value={ this.state.zipCode } style={this.style} />
+                        <Input type="text" name="address1" onChange={ this.handleChange } placeholder="address 1" value={ this.state.address1 } style={this.style} />
+                        <Input type="text" name="address2" onChange={ this.handleChange } placeholder="address 2" value={ this.state.address2 } style={this.style} />
+                        <label className="custom-upload-file">
+                            <input type="file" name="image" accept="image/*" onChange={ this.selectFile } ></input>
+                            <div>upload image</div>
+                        </label>
                         <OrangeButton type="submit" text="SAVE CHANGES" style={this.style} />
                     </form>
                 </div>

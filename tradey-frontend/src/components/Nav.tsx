@@ -10,13 +10,13 @@ export default function Nav() {
     return (
         <nav className="navbar">
             <div className="logo-container">
-                <Link to="/browse" style={{width: "100%"}}>
+                <Link to="/browse/clothing" style={{width: "100%"}}>
                     <img src={process.env.PUBLIC_URL + '/tradey-logo.svg'} alt="logo"/>
                 </Link>
             </div>
             {logged &&
             <div className="nav-buttons">
-                <NavLink to="/browse" activeClassName="active">
+                <NavLink to="/browse/clothing" activeClassName="active">
                     Browse
                 </NavLink>
                 <NavLink to="/about" activeClassName="active">
@@ -28,8 +28,8 @@ export default function Nav() {
                 <NavLink to="/add-item" activeClassName="active">
                     Add Item
                 </NavLink>
-                <NavLink to="/sign-out" activeClassName="active">
-                    <OrangeButton text="SIGN OUT"/>
+                <NavLink to="/sign-out" activeClassName="active" style={{ border: "none" }}>
+                    <OrangeButton text="SIGN OUT" style={{ borderRadius: "10px", minHeight: "3rem", margin: "0" }} />
                 </NavLink>
             </div>
             }
@@ -41,8 +41,8 @@ export default function Nav() {
                 <NavLink to="/login" activeClassName="active">
                     Login
                 </NavLink>
-                <NavLink to="/sign-up">
-                    <OrangeButton text="SIGN UP"/>
+                <NavLink to="/sign-up" style={{ border: "none" }}>
+                    <OrangeButton text="SIGN UP" style={{ borderRadius: "10px", minHeight: "3rem", margin: "0" }} />
                 </NavLink>
             </div>
             }

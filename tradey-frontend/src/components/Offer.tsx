@@ -1,21 +1,26 @@
-import React, { useEffect } from 'react'
 import '../styles/components/Offer.scss';
-import Item from './Item'
 
 export default function Offer(props: any) {
-    useEffect(() => {
-        console.log(props.offer)
-    }, [])
     return (
         <div className="offer">
-            <div className="my-item">
-                { props.offer.item.name }
+            <div className="item">
+                <div className="img-wrapper">
+                    <img src={process.env.PUBLIC_URL + `/assets/items-images/${ props.offer.itemOffered.images[0].image }`} alt="item_img" />
+                </div>
+                <h3>{ props.offer.itemOffered.name }</h3>
+                <p><b>user:</b> { props.offer.itemOffered.user.email }</p>
             </div>
             <div className="status">
+                <i className="fas fa-angle-double-right"></i>
+                <h1>STATUS</h1>
                 { props.offer.status }
             </div>
-            <div className="offered-item">
-                { props.offer.itemOffered.name }
+            <div className="item">
+                <div className="img-wrapper">
+                    <img src={process.env.PUBLIC_URL + `/assets/items-images/${ props.offer.item.images[0].image }`} alt="item_img" />
+                </div>
+                <h3>{ props.offer.item.name }</h3>
+                <p><b>user:</b>  { props.offer.item.user.email }</p>
             </div>
         </div>
     )

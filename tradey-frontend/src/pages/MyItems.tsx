@@ -8,12 +8,14 @@ import http from '../http-common';
 
 export default function MyItems() {
     const [items, setItems] = useState([]);
+    const [status, setStatus] = useState(false);
 
     useEffect(() => {
         http.get('/view-profile/my-items', {withCredentials: true})
         .then(res => {
             setItems(res.data);
             console.log(res.data);
+            setStatus(true);
         }).catch(err => {
             console.log(err);
     });
@@ -25,7 +27,9 @@ export default function MyItems() {
             <div className="content">
                 <ProfileNav />
             </div>
-            <ItemsList items={ items } />
+            {status &&
+                <ItemsList items={ items } />
+            }
             <Footer />
         </div>
     )

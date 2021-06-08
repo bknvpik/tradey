@@ -26,7 +26,7 @@ export class UsersService {
         return user;
       }
       
-      async getUserDetails(userId: string): Promise<any> {
+      async getUserDetails(userId: string): Promise<UserDetails> {
         const userDetails = await createQueryBuilder().select("userDetails").from(UserDetails, "userDetails")
         .leftJoinAndSelect("userDetails.user", "user")
         .where("user.id = :id", { id: userId })

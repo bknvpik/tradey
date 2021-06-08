@@ -1,13 +1,14 @@
-import { Controller, Get, Post, Param, Body, UseInterceptors, UploadedFile, Req, UploadedFiles } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Controller, Get, Post, Param, Body, UseInterceptors, Req, UploadedFiles } from '@nestjs/common';
+import { Request } from 'express';
 import { Item } from './entities/item.entity';
 import { ItemsService } from './items.service';
 import { AddItemDto } from './dtos/add-item.dto';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
-import path, { extname } from 'path';
+import { extname } from 'path';
 import { AuthService } from 'src/auth/auth.service';
+import { AddItemGetDto } from './dtos/add-item-get.dto';
 
 @Controller()
 export class ItemsController {
@@ -15,29 +16,22 @@ export class ItemsController {
         private readonly itemsService: ItemsService,
         private readonly authService: AuthService
     ) {}
-    
-    @Get('')
-    async default() {
-        return await this.itemsService.findByCategory('clothing');
-    }
-    
-    @Get('browse')
-    async browseDefault() {
-        return await this.itemsService.findByCategory('clothing');
-    }
 
     @Get('browse/:itemCategory')
-    async browseCategory(@Param('itemCategory') itemCategory: string): Promise<Item[]> {
-        return await this.itemsService.findByCategory(itemCategory);
+    async browseCategory(@Param('itemCategory', ) itemCategory: string, @Req() req: Request): Promise<Item[]> {
+        const cookie = req.cookies['jwt'];
+        const data = await this.authService.verifyCookie(cookie);
+        
+        return await this.itemsService.findByCategory(itemCategory, data.sub);
     }
 
     @Get('view-item/:itemId')
     async viewItem(@Param('itemId') itemId: string): Promise<Item> {
-        return await this.itemsService.findOne(itemId);
+        return await this.itemsService.getItemDetails(itemId);
     }
 
     @Get('add-item')
-    async getItemProperties(@Req() req: Request) {
+    async getItemProperties(@Req() req: Request): Promise<AddItemGetDto> {
         const cookie = req.cookies['jwt'];
         const user = await this.authService.verifyCookie(cookie);
         const categories = await this.itemsService.getCategories();
@@ -68,5 +62,4 @@ export class ItemsController {
         console.log(newItem);
         return await this.itemsService.createItem(newItem);
     }
-
 }

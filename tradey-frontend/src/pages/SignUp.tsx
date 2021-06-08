@@ -98,7 +98,7 @@ export default function SignUp(props: any) {
                     <div className="message">{ message }</div>
                     <Input type="text" name="email" placeholder="e-mail" value={ email } onChange={ handleChangeEmail } />
                     <Input type="password" name="password" placeholder="password" value={ password } onChange={ handleChangePassword } />
-                    <Input type="password" name="repeatPassword" placeholder="repeat password" value={ password } onChange={ handleChangeRepeatPassword } />
+                    <Input type="password" name="repeatPassword" placeholder="repeat password" value={ repeatPassword } onChange={ handleChangeRepeatPassword } />
                     <OrangeButton type="submit" text="SIGN UP" />
                 </form>
             </div>

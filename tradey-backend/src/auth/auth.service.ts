@@ -31,7 +31,7 @@ export class AuthService {
         return user;
     }
 
-    async verifyCookie(cookie: string) {
+    async verifyCookie(cookie: string): Promise<any> {
         return await this.jwtService.verifyAsync(cookie);
     }
 }

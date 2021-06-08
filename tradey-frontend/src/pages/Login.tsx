@@ -24,10 +24,10 @@ export default function Login(props: any) {
         .then(res => {
             setMessage(res.data);
             setLogged(true);
-            props.history.push("/browse");
+            props.history.push("/browse/clothing");
         }).catch(err => {
             console.log(err);
-            setMessage(err.message);
+            setMessage("Invalid credentials!");
         })
         e.target.reset();
         clearData();

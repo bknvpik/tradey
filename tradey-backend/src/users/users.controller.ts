@@ -7,6 +7,8 @@ import { AuthService } from 'src/auth/auth.service';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { UsersService } from './users.service';
 import { v4 as uuidv4 } from 'uuid';
+import { Item } from 'src/items/entities/item.entity';
+import { UserDetails } from './entities/user-details.entity';
 
 @Controller()
 export class UsersController {  
@@ -18,9 +20,7 @@ export class UsersController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@Req() req: any, @Res({ passthrough: true }) res: Response) {
-      console.log(req.user)
       const jwt = await this.authService.login(req.user);
-      console.log(jwt);
       if(!res.cookie('jwt', jwt, { httpOnly: true }))
         throw new Error("Invalid credentials!");
       return "Succesfully logged in!";
@@ -47,22 +47,20 @@ export class UsersController {
     }
     
     @Get('view-profile/about-me')
-    async viewProfile(@Req() req: Request) {
+    async viewProfile(@Req() req: Request): Promise<UserDetails> {
         const cookie = req.cookies['jwt'];
         const data = await this.authService.verifyCookie(cookie);
   
         const user = await this.usersService.getUserDetails(data.sub);
-        console.log(user);
         return user;
     }
   
     @Get('view-profile/my-items')
-    async myItems(@Req() req: Request) {
+    async myItems(@Req() req: Request): Promise<Item[]> {
       const cookie = req.cookies['jwt'];
       const data = await this.authService.verifyCookie(cookie);
       
       const userItems = await this.usersService.getUserItems(data.username);
-      console.log(userItems);
       return userItems;
     }
 
@@ -79,10 +77,9 @@ export class UsersController {
     async editProfile(@Body() userData: any, @UploadedFile() image: Express.Multer.File) {
       console.log(userData)
       console.log(image);
-      userData.image = image.filename;
+      if(image)
+        userData.image = image.filename;
       
-      const newUserDetails = await this.usersService.editUserDetails(userData);
-      console.log(userData);
-      return newUserDetails;
+      await this.usersService.editUserDetails(userData);
     }
 }

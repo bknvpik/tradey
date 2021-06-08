@@ -14,28 +14,30 @@ export class OffersService {
 
         async createOffer(offer: MakeOfferPostDto): Promise<Offer> {
             const createdOffer = await this.offersRepository.save(offer);
-            console.log(createdOffer);
             return createdOffer;
         }
 
-        async findUserOffers(username: string): Promise<MyOffersDto> {
-            const myOffers = await createQueryBuilder().select("offer").from(Offer, "offer")
-            .leftJoinAndSelect("offer.item", "item")
-            .leftJoinAndSelect("item.images", "images")
-            .leftJoinAndSelect("offer.itemOffered", "itemOffered")
-            .leftJoin("item.user", "user")
-            .where("user.email = :email", { email: username })
-            .getMany();
-
+        async findUserOffers(userId: string): Promise<MyOffersDto> {
             const offeredToMe = await createQueryBuilder().select("offer").from(Offer, "offer")
             .leftJoinAndSelect("offer.item", "item")
+            .leftJoinAndSelect("item.images", "itemImages")
             .leftJoinAndSelect("offer.itemOffered", "itemOffered")
-            .leftJoin("itemOffered.user", "user")
-            .where("user.email = :email", { email: username })
+            .leftJoinAndSelect("itemOffered.images", "itemOfferedImages")
+            .leftJoinAndSelect("item.user", "user")
+            .leftJoinAndSelect("itemOffered.user", "offeredUser")
+            .where("user.id = :id", { id: userId })
             .getMany();
 
-            console.log(myOffers);
-            console.log(offeredToMe);
+            const myOffers = await createQueryBuilder().select("offer").from(Offer, "offer")
+            .leftJoinAndSelect("offer.item", "item")
+            .leftJoinAndSelect("item.images", "itemImages")
+            .leftJoinAndSelect("offer.itemOffered", "itemOffered")
+            .leftJoinAndSelect("itemOffered.images", "itemOfferedImages")
+            .leftJoinAndSelect("itemOffered.user", "offeredUser")
+            .leftJoinAndSelect("item.user", "user")
+            .where("offeredUser.id = :id", { id: userId })
+            .getMany();
+
             const offers: MyOffersDto = { myOffers: myOffers, offeredToMe: offeredToMe }; 
             return offers;
         }
