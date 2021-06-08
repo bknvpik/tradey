@@ -1,0 +1,12 @@
+@import '../index';
+
+.my-items {
+    .content {
+        @include useGrid;
+        grid-template-rows: 20% 1fr;
+        width: 100%;
+        .profile-nav {
+            grid-column-start: 2;
+        }
+    }
+}

@@ -26,10 +26,10 @@ export class UsersService {
         return user;
       }
       
-      async getUserDetails(username: string, id: string): Promise<any> {
+      async getUserDetails(userId: string): Promise<any> {
         const userDetails = await createQueryBuilder().select("userDetails").from(UserDetails, "userDetails")
         .leftJoinAndSelect("userDetails.user", "user")
-        .where("user.email = :email", { email: username})
+        .where("user.id = :id", { id: userId })
         .getOne();
         console.log(userDetails);
         return userDetails;
@@ -54,6 +54,7 @@ export class UsersService {
           password: hashedPassword,
         }
         const createdUser = await this.usersRepository.save(user);
+        this.usersDetailsRepository.save({ user: user })
         return createdUser;
       }
 

@@ -20,16 +20,17 @@ export class OffersService {
 
         async findUserOffers(username: string): Promise<MyOffersDto> {
             const myOffers = await createQueryBuilder().select("offer").from(Offer, "offer")
-            .leftJoinAndSelect("offer.itemId", "itemId")
-            .leftJoinAndSelect("offer.itemOfferedId", "itemOfferedId")
-            .leftJoin("itemId.user", "user")
+            .leftJoinAndSelect("offer.item", "item")
+            .leftJoinAndSelect("item.images", "images")
+            .leftJoinAndSelect("offer.itemOffered", "itemOffered")
+            .leftJoin("item.user", "user")
             .where("user.email = :email", { email: username })
             .getMany();
 
             const offeredToMe = await createQueryBuilder().select("offer").from(Offer, "offer")
-            .leftJoinAndSelect("offer.itemId", "itemId")
-            .leftJoinAndSelect("offer.itemOfferedId", "itemOfferedId")
-            .leftJoin("itemOfferedId.user", "user")
+            .leftJoinAndSelect("offer.item", "item")
+            .leftJoinAndSelect("offer.itemOffered", "itemOffered")
+            .leftJoin("itemOffered.user", "user")
             .where("user.email = :email", { email: username })
             .getMany();
 

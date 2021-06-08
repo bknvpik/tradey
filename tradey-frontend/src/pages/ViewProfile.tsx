@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import '../styles/pages/ViewProfile.scss';
 import Footer from '../components/Footer';
 import HeaderTitle from '../components/HeaderTitle';
+import ProfileNav from '../components/ProfileNav';
 import http from '../http-common';
-import '../styles/pages/ViewProfile.scss';
 
-export default function ViewProfile(props: any) {
+export default function ViewProfile() {
     const [userData, setUserData] = useState(Object);
     const [status, setStatus] = useState(false);
 
     useEffect(() => {
-        http.get('/view-profile', {withCredentials: true})
+        http.get('/view-profile/about-me', {withCredentials: true})
         .then(res => {
             setUserData(res.data);
             console.log(res.data);
@@ -22,34 +22,43 @@ export default function ViewProfile(props: any) {
 
     return (
         <div className="view-profile">
-            <HeaderTitle text={ "My profile" }/>
-            <Link to={`/view-profile`}>
-                <button>About me</button>
-            </Link>
-            <Link to={`/view-profile/my-items`}>
-                <button>My Items</button>
-            </Link>
-            <Link to={`/view-profile/my-offers`}>
-                <button>My Offers</button>
-            </Link>
-            <Link to={`/view-profile/edit-profile`}>
-                <button>Edit profile</button>
-            </Link>
-            <div className="info">
+            <HeaderTitle text={ "My profile" } style={{ height: "15vh" }} />
+            <div className="content">
+                <ProfileNav />
                 {status &&
-                <div className="main-info">
-                    <img src=""></img>
-                    <div className="user-details">
-                        <>First Name: {userData.firstName}</>
-                        <>Last Name: {userData.lastName}</>
-                        <>E-Mail: {userData.user.email}</>
+                <div className="info">
+                    <div className="profile-img">
+                        <img src={process.env.PUBLIC_URL + `/assets/users-images/${ userData.image }`} alt="profile_img"></img>
                     </div>
-                    <div className="more-details">
-                        <>Address: {userData.address1}</>
-                        <>Address: {userData.address2}</>
-                        <>City: {userData.city}</>
-                        <>ZIP code: {userData.zipCode}</>
-                        <>Country: {userData.country}</>
+                    <div className="user-details">
+                            <div>
+                                <div className="label">First Name:</div>
+                                <div className="detail">{userData.firstName}</div>
+                            </div>
+                            <div>
+                                <div className="label">Last Name:</div>
+                                <div className="detail">{userData.lastName}</div>
+                            </div>
+                            <div>
+                                <div className="label">E - Mail:</div>
+                                <div className="detail">{userData.user.email}</div>
+                            </div>
+                            <div>
+                                <div className="label">Country:</div>
+                                <div className="detail">{userData.country}</div>
+                            </div>
+                            <div>
+                                <div className="label">City:</div>
+                                <div className="detail">{userData.city}</div>
+                            </div>
+                            <div>
+                                <div className="label">ZIP Code:</div>
+                                <div className="detail">{userData.zipCode}</div>
+                            </div>
+                            <div>
+                                <div className="label">Address:</div>
+                                <div className="detail">{`${userData.address1}  ${userData.address2}`}</div>
+                            </div>
                     </div>
                 </div>
                 }

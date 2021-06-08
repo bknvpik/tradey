@@ -21,19 +21,6 @@
         @include flexCenter(row);
         padding-left: 10rem;
         justify-content: space-around;
-        grid-column-start: 3;
-        button {
-            height: 50%;
-            margin-top: 0;
-        }
-        a {
-            text-decoration: none;
-            display: block;
-            @include flexCenter(row);
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+        @include styleNavLinks();
     }
 }

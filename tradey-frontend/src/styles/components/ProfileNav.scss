@@ -1,0 +1,10 @@
+@import '../index';
+
+.profile-nav {
+    @include flexCenter(row);
+    justify-content: space-between;
+    width: 100%;
+    height: 10vh;
+    grid-column-start: 2;
+    @include styleNavLinks();
+}

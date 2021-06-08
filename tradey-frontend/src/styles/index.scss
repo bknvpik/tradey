@@ -13,6 +13,11 @@ $orange: #EB5E28;
     flex-direction: $direction;
 }
 
+@mixin useGrid {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+}
+
 @mixin buttonStyling {
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
@@ -32,6 +37,29 @@ $orange: #EB5E28;
     }
 }
 
+@mixin styleNavLinks {
+    a {
+        text-decoration: none;
+        display: block;
+        @include flexCenter(row);
+        width: 10rem;
+        min-height: 50%;
+        color: $gray;
+        font-weight: bold;
+        font-size: 1.5rem;
+        border-bottom: 5px solid $white;
+        &:hover {
+            border-bottom: 5px solid $sandy;
+        }
+    }
+    .active {
+        color: $dark-gray;
+        border-bottom: 5px solid $orange;
+        &:hover {
+            border-bottom: 5px solid $orange;
+        }
+    }
+}
 @mixin svgContainer {
     width: 100%;
     height: 100%;

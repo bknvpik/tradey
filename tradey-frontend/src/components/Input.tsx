@@ -10,6 +10,7 @@ export default function Input(props: any) {
             placeholder={ props.placeholder }
             onChange={ props.onChange }
             style={ props.style }
+            value={ props.value }
         />
     )
 }

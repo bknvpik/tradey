@@ -1,0 +1,31 @@
+@import '../index';
+
+.edit-profile {
+    height: auto;
+    .content {
+        @include useGrid;
+        grid-template-rows: 15% 1fr;
+        width: 100%;
+        min-height: 100vh;
+        form {
+            @include flexCenter(column);
+            justify-content: space-around;
+            grid-column-start: 2;
+            padding: 3rem 0 3rem 0;
+            select {
+                width: 50%;
+                height: 15%;
+                border-radius: 20px;
+                margin-bottom: 1rem;
+                border: none;
+                color: $dark-gray;
+                box-shadow: 0 0 3px $gray;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 25px;
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+    }
+}

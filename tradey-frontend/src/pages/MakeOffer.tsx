@@ -45,6 +45,7 @@ export default function MakeOffer(props: any) {
         http.get(`/make-offer/${selectedItem}`, {withCredentials: true})
         .then(res => {
             setTest(res.data.item);
+            console.log(test)
         }).catch(err => {
         console.log(err);
     });
@@ -55,7 +56,7 @@ export default function MakeOffer(props: any) {
             <HeaderTitle text="Make An Offer"/>
             <div className="current-offer">
                 {status && <Item item={ item } />}
-                {selectedItem && <Item item = { test } />}
+                {selectedItem && test && <Item item = { test } />}
                 <button onClick={handleSubmit}>Make Offer</button>
             </div>
             <HeaderTitle text="Select Your Item"/>

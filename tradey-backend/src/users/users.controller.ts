@@ -46,12 +46,12 @@ export class UsersController {
       return await this.authService.verifyCookie(cookie);
     }
     
-    @Get('view-profile')
+    @Get('view-profile/about-me')
     async viewProfile(@Req() req: Request) {
         const cookie = req.cookies['jwt'];
         const data = await this.authService.verifyCookie(cookie);
   
-        const user = await this.usersService.getUserDetails(data.username, data.sub);
+        const user = await this.usersService.getUserDetails(data.sub);
         console.log(user);
         return user;
     }

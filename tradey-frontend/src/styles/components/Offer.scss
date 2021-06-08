@@ -1,0 +1,6 @@
+@import '../index';
+
+.offer {
+    @include flexCenter(row);
+    width: 100%;
+}

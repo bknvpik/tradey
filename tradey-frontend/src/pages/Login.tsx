@@ -20,7 +20,8 @@ export default function Login(props: any) {
         http.post("/login", {
             username: email,
             password: password,
-        }).then(res => {
+        }, {withCredentials: true})
+        .then(res => {
             setMessage(res.data);
             setLogged(true);
             props.history.push("/browse");

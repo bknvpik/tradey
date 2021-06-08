@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './styles/App.scss';
 import Nav from './components/Nav';
@@ -18,10 +18,11 @@ import NotFound from './components/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthContext } from './components/AuthContext';
 import { Redirect } from 'react-router';
+import http from './http-common';
 
 export default function App() {
   const [logged, setLogged] = useState(false);
-
+  
   return (
     <div className="App">
     <AuthContext.Provider value={{ logged, setLogged }}>
@@ -67,7 +68,7 @@ export default function App() {
           />
           <ProtectedRoute
             exact
-            path="/view-profile"
+            path="/view-profile/about-me"
             component={ViewProfile}
           />
           <ProtectedRoute
@@ -86,7 +87,6 @@ export default function App() {
             component={EditProfile}
           />
           <ProtectedRoute
-            exact
             path="/make-offer"
             component={MakeOffer}
           />
